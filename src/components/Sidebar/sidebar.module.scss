@@ -1,0 +1,32 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: var(--sidebar-width);
+    background: url('/img/bg-hero.png') center/cover;
+    border-right: 2px solid var(--c-black);
+    padding: var(--padding-main);
+}
+
+.menu {
+    padding: var(--padding-main);
+
+    ul {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+    li {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+
+        .icon {
+            font-size: 0;
+        }
+
+    }
+    path {
+        fill: var(--c-white);
+    }
+}
