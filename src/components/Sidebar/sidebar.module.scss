@@ -1,32 +1,47 @@
 .main {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: var(--sidebar-width);
-    background: url('/img/bg-hero.png') center/cover;
-    border-right: 2px solid var(--c-black);
-    padding: var(--padding-main);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: var(--sidebar-width);
+  background: url("/img/bg-hero.png") center/cover;
+  border-right: 2px solid var(--c-black);
+  padding: var(--padding-main);
+}
+
+.logo {
+  width: 160px;
+  height: 40px;
+  background-color: white;
+}
+
+.apps {
+  margin-top: 16px;
 }
 
 .menu {
-    padding: var(--padding-main);
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  li {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-out;
 
-    ul {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
+    &:hover {
+      border-radius: 4px;
+      background-color: rgba(255, 255, 255, 0.1);
     }
-    li {
-        display: flex;
-        align-items: center;
-        gap: 16px;
 
-        .icon {
-            font-size: 0;
-        }
-
+    .icon {
+      font-size: 0;
     }
-    path {
-        fill: var(--c-white);
-    }
+  }
+  path {
+    fill: var(--c-white);
+  }
 }

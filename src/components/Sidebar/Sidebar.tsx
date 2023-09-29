@@ -1,37 +1,37 @@
-"use client";
-
-import Image from "next/image";
 import styles from "./sidebar.module.scss";
-import localFont from "next/font/local";
-import Icon from "./Icon/Icon";
+import Icon from "../Icon/Icon";
+import SidebarApps from "../SidebarApps/SidebarApps";
 
 export default function Sidebar() {
   const actions = [
     {
       icon: "add_circle",
       name: "Add Keepix",
-      action: () => {},
+      action: undefined,
     },
     {
       icon: "monitor_heart",
       name: "System monitor",
-      action: () => {},
+      action: undefined,
     },
     {
       icon: "add_circle",
       name: "Add Apps",
-      action: () => {},
+      action: undefined,
     },
     {
       icon: "tune",
       name: "Preferences",
-      action: () => {},
+      action: undefined,
     },
   ];
 
   return (
     <div className={styles.main}>
-      <div className={styles.logo}>logo</div>
+      <div>
+        <div className={styles.logo}>logo</div>
+        <SidebarApps />
+      </div>
       <div className={styles.menu}>
         <ul>
           {actions.map((action, key) => (
