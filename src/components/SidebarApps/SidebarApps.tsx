@@ -1,9 +1,9 @@
 "use client";
 
-import styles from "./sidebar-apps.module.scss";
-import type { InferGetServerSidePropsType, GetServerSideProps } from "next";
+import styles from "./styles.module.scss";
 import { useEffect, useState } from "react";
 import Icon from "../Icon/Icon";
+import Link from "next/link";
 
 type App = {
   id: string;
@@ -11,7 +11,7 @@ type App = {
   subTitle: string;
 };
 
-export default function SidebarApps() {
+export default function SidebarApps({ activeSlug }: { activeSlug: string }) {
   const [apps, setApps] = useState<App[]>([]);
   const [isLoading, setLoading] = useState(true);
 
@@ -35,14 +35,20 @@ export default function SidebarApps() {
       {apps.length !== 0 && (
         <ul className={styles.list}>
           {apps.map((app, key) => (
-            <li className={styles.item} key={key}>
-              <div className={styles.itemIcon}>
-                <Icon name="web_asset" />
-              </div>
-              <div className={styles.itemContent}>
-                <span className={styles.itemTitle}>{app.title}</span>
-                <span className={styles.itemSubtitle}>{app.subTitle}</span>
-              </div>
+            <li
+              className={styles.item}
+              key={key}
+              data-active={activeSlug === app.id}
+            >
+              <Link href={`/apps/${app.id}`} className={styles.itemLink}>
+                <div className={styles.itemIcon}>
+                  <Icon name="web_asset" />
+                </div>
+                <div className={styles.itemContent}>
+                  <span className={styles.itemTitle}>{app.title}</span>
+                  <span className={styles.itemSubtitle}>{app.subTitle}</span>
+                </div>
+              </Link>
             </li>
           ))}
         </ul>

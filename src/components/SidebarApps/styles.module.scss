@@ -1,0 +1,54 @@
+.main {
+  margin-top: 16px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.list {
+  margin-top: 16px;
+}
+
+.item {
+  &Link {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-out;
+
+    &:hover,
+    [data-active="true"] > & {
+      border-radius: 4px;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  &Icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--c-white);
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+  }
+
+  &Content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &Title {
+    font-weight: 700;
+  }
+
+  &Subtitle {
+    font-size: 14px;
+    font-weight: 100;
+  }
+}
