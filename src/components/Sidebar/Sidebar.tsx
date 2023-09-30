@@ -3,7 +3,7 @@ import Icon from "../Icon/Icon";
 import SidebarApps from "../SidebarApps/SidebarApps";
 import Link from "next/link";
 
-export default function Sidebar({ activeSlug }: { activeSlug?: string }) {
+export default function Sidebar() {
   const actions = [
     {
       icon: "add_circle",
@@ -33,7 +33,7 @@ export default function Sidebar({ activeSlug }: { activeSlug?: string }) {
         <Link href={"/"} className={styles.logo}>
           logo
         </Link>
-        <SidebarApps activeSlug={activeSlug} />
+        <SidebarApps />
       </div>
       <div className={styles.menu}>
         <ul>

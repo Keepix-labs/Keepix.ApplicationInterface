@@ -4,6 +4,8 @@ import styles from "./styles.module.scss";
 import { useEffect, useState } from "react";
 import Icon from "../Icon/Icon";
 import Link from "next/link";
+import Loader from "../Loader/Loader";
+import { useParams } from "next/navigation";
 
 type App = {
   id: string;
@@ -11,7 +13,9 @@ type App = {
   subTitle: string;
 };
 
-export default function SidebarApps({ activeSlug }: { activeSlug: string }) {
+export default function SidebarApps() {
+  const params = useParams();
+
   const [apps, setApps] = useState<App[]>([]);
   const [isLoading, setLoading] = useState(true);
 
@@ -31,14 +35,14 @@ export default function SidebarApps({ activeSlug }: { activeSlug: string }) {
   return (
     <div className={styles.main}>
       <div className={styles.title}>Apps</div>
-      {isLoading && <div>Loading...</div>}
+      {isLoading && <Loader />}
       {apps.length !== 0 && (
         <ul className={styles.list}>
           {apps.map((app, key) => (
             <li
               className={styles.item}
               key={key}
-              data-active={activeSlug === app.id}
+              data-active={params["app-slug"] === app.id}
             >
               <Link href={`/apps/${app.id}`} className={styles.itemLink}>
                 <div className={styles.itemIcon}>

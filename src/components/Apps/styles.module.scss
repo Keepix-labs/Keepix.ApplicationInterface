@@ -1,4 +1,50 @@
 .main {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   padding: var(--padding-main);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px;
+
+  &Icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--c-white);
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+  }
+
+  &Content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &Title {
+    font-weight: 700;
+  }
+
+  &Subtitle {
+    font-size: 14px;
+    font-weight: 100;
+  }
+}
+
+.content {
+  height: 100%;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 16px;
+  border-top: 1px solid var(--c-white);
 }
