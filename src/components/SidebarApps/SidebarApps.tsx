@@ -37,7 +37,9 @@ export default function SidebarApps() {
     <div className={styles.main}>
       <div className={styles.title}>Apps</div>
       {isLoading && <Loader />}
-      {!isLoading && !apps.length && <div>No app installed yet</div>}
+      {!isLoading && !apps.length && (
+        <div className={styles.empty}>No app installed yet</div>
+      )}
       {apps.length !== 0 && (
         <ul className={styles.list}>
           {apps.map((app, key) => (

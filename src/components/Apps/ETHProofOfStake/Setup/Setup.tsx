@@ -99,6 +99,7 @@ export default function AppETHProofOfStakeSetup() {
           max={2}
           step={1}
           value={currentInputOptionIndex}
+          className={styles.input}
           onChange={onChange}
         />
         {currentLoanInfos && (
