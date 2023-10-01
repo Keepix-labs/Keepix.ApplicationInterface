@@ -10,6 +10,7 @@ type App = {
   id: string;
   title: string;
   subTitle: string;
+  installed: boolean;
 };
 
 export default function AppsStore() {
@@ -41,11 +42,15 @@ export default function AppsStore() {
               </div>
               <div className={styles.itemContent}>
                 <span className={styles.itemTitle}>{app.title}</span>
-                <span className={styles.itemInstall}>Not installed</span>
+                <span className={styles.itemInstall}>
+                  {app.installed ? "Installed" : "Not installed"}
+                </span>
               </div>
-              <div className={styles.itemFooter}>
-                <Btn href={`/apps/${app.id}/setup`}>Install</Btn>
-              </div>
+              {!app.installed && (
+                <div className={styles.itemFooter}>
+                  <Btn href={`/apps/${app.id}/setup`}>Install</Btn>
+                </div>
+              )}
             </li>
           ))}
         </ul>

@@ -30,13 +30,12 @@ export default function AppETHProofOfStakeSetup() {
   const params = useParams();
 
   const [data, setData] = useState<Data | null>(null);
-  const [wantedETHToStake, setWantedETHToStake] = useState<number>(0);
+  const [currentInputOptionIndex, setCurrentInputOptionIndex] =
+    useState<number>(0);
   const [currentLoanInfos, setCurrentLoanInfos] = useState<LoanInfo | null>(
     null
   );
-  const minEth = 8;
-  const maxEth = 32;
-  const stepEth = 8;
+  const inputOptions = [8, 16, 32];
 
   useEffect(() => {
     try {
@@ -46,7 +45,9 @@ export default function AppETHProofOfStakeSetup() {
         .then((res) => res.json())
         .then((data: Data) => {
           setData(data);
-          setWantedETHToStake(parseInt(data.values.amount.defaultValue));
+          setCurrentInputOptionIndex(
+            inputOptions.indexOf(parseInt(data.values.amount.defaultValue))
+          );
           setCurrentLoanInfos(
             data.values.amount.values.find(
               (value) => value.value === data.values.amount.defaultValue
@@ -63,10 +64,11 @@ export default function AppETHProofOfStakeSetup() {
       return;
     }
 
-    setWantedETHToStake(parseInt(evt.target.value));
+    setCurrentInputOptionIndex(parseInt(evt.target.value));
     setCurrentLoanInfos(
       data.values.amount.values.find(
-        (value) => value.value === evt.target.value
+        (value) =>
+          value.value === inputOptions[parseInt(evt.target.value)].toString()
       ) ?? null
     );
   };
@@ -79,7 +81,7 @@ export default function AppETHProofOfStakeSetup() {
       footer={
         currentLoanInfos && (
           <Btn
-            href={`/apps/${params["app-slug"]}/amount?amount=${wantedETHToStake}`}
+            href={`/apps/${params["app-slug"]}/amount?amount=${inputOptions[currentInputOptionIndex]}`}
           >
             Confirm
           </Btn>
@@ -88,13 +90,15 @@ export default function AppETHProofOfStakeSetup() {
     >
       <div className={styles.main}>
         <div className={styles.title}>{data.title}</div>
-        <div className={styles.ethToStake}>{wantedETHToStake} ETH</div>
+        <div className={styles.ethToStake}>
+          {inputOptions[currentInputOptionIndex]} ETH
+        </div>
         <input
           type="range"
-          min={minEth}
-          max={maxEth}
-          step={stepEth}
-          value={wantedETHToStake}
+          min={0}
+          max={2}
+          step={1}
+          value={currentInputOptionIndex}
           onChange={onChange}
         />
         {currentLoanInfos && (

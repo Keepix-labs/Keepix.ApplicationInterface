@@ -11,6 +11,7 @@ type App = {
   id: string;
   title: string;
   subTitle: string;
+  installed: boolean;
 };
 
 export default function SidebarApps() {
@@ -23,8 +24,8 @@ export default function SidebarApps() {
     try {
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/plugin/list`)
         .then((res) => res.json())
-        .then((data) => {
-          setApps(data);
+        .then((data: App[]) => {
+          setApps(data.filter((app) => app.installed));
           setLoading(false);
         });
     } catch (error) {
@@ -36,6 +37,7 @@ export default function SidebarApps() {
     <div className={styles.main}>
       <div className={styles.title}>Apps</div>
       {isLoading && <Loader />}
+      {!isLoading && !apps.length && <div>No app installed yet</div>}
       {apps.length !== 0 && (
         <ul className={styles.list}>
           {apps.map((app, key) => (

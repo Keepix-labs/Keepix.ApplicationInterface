@@ -36,12 +36,5 @@ export default function AppETHProofOfStakeDashboard() {
 
   if (!data) return <Loader />;
 
-  return (
-    <AppsBase
-      title={data?.title}
-      footer={<Btn href={`/apps/${params["app-slug"]}/setup`}>Setup</Btn>}
-    >
-      AppETHProofOfStakeDashboard
-    </AppsBase>
-  );
+  return <AppsBase title={data?.title}>AppETHProofOfStakeDashboard</AppsBase>;
 }
