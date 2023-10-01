@@ -1,12 +1,12 @@
 import styles from "./page.module.scss";
 import Sidebar from "@/components/Sidebar/Sidebar";
-import AppsHome from "@/components/Apps/Home/Home";
+import Monitor from "@/components/Monitor/Monitor";
 
-export default function HomeView() {
+export default function MonitorView() {
   return (
     <main className={styles.main}>
       <Sidebar />
-      <AppsHome />
+      <Monitor />
     </main>
   );
 }

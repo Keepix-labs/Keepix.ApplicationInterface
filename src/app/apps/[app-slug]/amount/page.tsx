@@ -5,7 +5,7 @@ import styles from "./page.module.scss";
 import Sidebar from "@/components/Sidebar/Sidebar";
 import { useParams } from "next/navigation";
 
-export default function AppsSlug() {
+export default function AppsSlugAmountView() {
   const apps: {
     [key: string]: () => JSX.Element;
   } = {
