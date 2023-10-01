@@ -1,0 +1,25 @@
+.main {
+  margin-top: 48px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 900;
+  margin-bottom: 24px;
+}
+
+.questions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.question {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  &Title {
+    font-weight: 900;
+  }
+}

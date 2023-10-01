@@ -78,7 +78,11 @@ export default function AppETHProofOfStakeSetup() {
       title={"ETHProofOfStake Setup"}
       footer={
         currentLoanInfos && (
-          <Btn href={`/apps/${params["app-slug"]}/amount`}>Confirm</Btn>
+          <Btn
+            href={`/apps/${params["app-slug"]}/amount?amount=${wantedETHToStake}`}
+          >
+            Confirm
+          </Btn>
         )
       }
     >
