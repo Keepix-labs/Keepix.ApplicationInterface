@@ -20,29 +20,29 @@
   margin-top: 16px;
 }
 
-.menu {
-  ul {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  li {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-out;
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.link {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-out;
 
-    &:hover {
-      border-radius: 4px;
-      background-color: rgba(255, 255, 255, 0.1);
-    }
-
-    .icon {
-      font-size: 0;
-    }
+  &:hover,
+  [data-active="true"] > & {
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.1);
   }
+
+  .icon {
+    font-size: 0;
+  }
+
   path {
     fill: var(--c-white);
   }

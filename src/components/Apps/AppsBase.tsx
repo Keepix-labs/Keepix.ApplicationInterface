@@ -14,7 +14,7 @@ export default function AppsBase({
 }: {
   title: string;
   children: ReactNode;
-  footer: ReactNode;
+  footer?: ReactNode;
 }) {
   const params = useParams();
 
@@ -29,7 +29,7 @@ export default function AppsBase({
         </div>
       </header>
       <div className={styles.content}>{children}</div>
-      <footer className={styles.footer}>{footer}</footer>
+      {footer && <footer className={styles.footer}>{footer}</footer>}
     </main>
   );
 }
