@@ -3,10 +3,9 @@
 import { useParams, useSearchParams } from "next/navigation";
 import AppsBase from "../../AppsBase";
 import styles from "./styles.module.scss";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Loader from "@/components/Loader/Loader";
 import Btn from "@/components/Btn/Btn";
-import { useRouter } from "next/router";
 import FAQ from "@/components/FAQ/FAQ";
 
 type Data = {
@@ -31,9 +30,8 @@ export default function AppETHProofOfStakeAmount() {
   const amount = searchParams.get("amount");
 
   const [data, setData] = useState<Data | null>(null);
-  const [dataPrivateKey, setDataPrivateKey] = useState<DataSecretWallet | null>(
-    null
-  );
+  const [secretKeyDownloaded, setSecretKeyDownloaded] =
+    useState<boolean>(false);
 
   useEffect(() => {
     if (!amount) {
@@ -63,7 +61,15 @@ export default function AppETHProofOfStakeAmount() {
       )
         .then((res) => res.json())
         .then((data: DataSecretWallet) => {
-          setDataPrivateKey(data);
+          const element = document.createElement("a");
+          const file = new Blob([data.privateKey], { type: "text/plain" });
+          element.href = URL.createObjectURL(file);
+          element.download = "secretKey.txt";
+          document.body.appendChild(element);
+          element.click();
+
+          setSecretKeyDownloaded(true);
+          console.log("ici");
         });
     } catch (error) {
       console.error(error);
@@ -76,7 +82,7 @@ export default function AppETHProofOfStakeAmount() {
     <AppsBase
       title={"ETHProofOfStake Setup"}
       footer={
-        dataPrivateKey && (
+        secretKeyDownloaded && (
           <Btn href={`/apps/${params["app-slug"]}/transfer`}>Continue</Btn>
         )
       }
@@ -88,11 +94,6 @@ export default function AppETHProofOfStakeAmount() {
         </div>
         <div className={styles.address}>Address : {data.values.address}</div>
         <Btn onClick={getWalletSecret}>Get Wallet Secret</Btn>
-        {dataPrivateKey && (
-          <div className={styles.privateKey}>
-            Your secret key : {dataPrivateKey.privateKey}
-          </div>
-        )}
         <FAQ />
       </div>
     </AppsBase>
