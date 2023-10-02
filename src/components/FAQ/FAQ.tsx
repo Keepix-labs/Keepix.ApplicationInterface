@@ -1,25 +1,30 @@
 import styles from "./styles.module.scss";
 
-export default function FAQ() {
-  const questions = [
-    {
-      title: "How much does it cost ?",
-      desc: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora, qui expedita totam voluptatem consectetur dolores vel neque pariatur. Consequuntur veniam repellendus minus saepe culpa maiores, reprehenderit tempora perferendis quo? A!",
-    },
-    {
-      title: "How much does it cost ?",
-      desc: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora, qui expedita totam voluptatem consectetur dolores vel neque pariatur. Consequuntur veniam repellendus minus saepe culpa maiores, reprehenderit tempora perferendis quo? A!",
-    },
-    {
-      title: "How much does it cost ?",
-      desc: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora, qui expedita totam voluptatem consectetur dolores vel neque pariatur. Consequuntur veniam repellendus minus saepe culpa maiores, reprehenderit tempora perferendis quo? A!",
-    },
-    {
-      title: "How much does it cost ?",
-      desc: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora, qui expedita totam voluptatem consectetur dolores vel neque pariatur. Consequuntur veniam repellendus minus saepe culpa maiores, reprehenderit tempora perferendis quo? A!",
-    },
-  ];
+type Question = {
+  title: string;
+  desc: string;
+};
 
+const questions: Question[] = [
+  {
+    title: "How much does it cost ?",
+    desc: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora, qui expedita totam voluptatem consectetur dolores vel neque pariatur. Consequuntur veniam repellendus minus saepe culpa maiores, reprehenderit tempora perferendis quo? A!",
+  },
+  {
+    title: "How much does it cost ?",
+    desc: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora, qui expedita totam voluptatem consectetur dolores vel neque pariatur. Consequuntur veniam repellendus minus saepe culpa maiores, reprehenderit tempora perferendis quo? A!",
+  },
+  {
+    title: "How much does it cost ?",
+    desc: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora, qui expedita totam voluptatem consectetur dolores vel neque pariatur. Consequuntur veniam repellendus minus saepe culpa maiores, reprehenderit tempora perferendis quo? A!",
+  },
+  {
+    title: "How much does it cost ?",
+    desc: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora, qui expedita totam voluptatem consectetur dolores vel neque pariatur. Consequuntur veniam repellendus minus saepe culpa maiores, reprehenderit tempora perferendis quo? A!",
+  },
+];
+
+export default function FAQ() {
   return (
     <div className={styles.main}>
       <div className={styles.title}>FAQ</div>

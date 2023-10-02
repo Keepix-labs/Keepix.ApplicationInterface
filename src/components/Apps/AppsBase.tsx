@@ -3,21 +3,14 @@
 import { ReactNode } from "react";
 import styles from "./styles.module.scss";
 import Icon from "../Icon/Icon";
-import Link from "next/link";
-import { useParams } from "next/navigation";
-import Btn from "../Btn/Btn";
 
-export default function AppsBase({
-  title,
-  children,
-  footer,
-}: {
+type Props = {
   title: string;
   children: ReactNode;
   footer?: ReactNode;
-}) {
-  const params = useParams();
+};
 
+export default function AppsBase({ title, children, footer }: Props) {
   return (
     <main className={styles.main}>
       <header className={styles.header}>

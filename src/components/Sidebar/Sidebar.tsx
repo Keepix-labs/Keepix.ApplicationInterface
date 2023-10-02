@@ -1,46 +1,46 @@
 "use client";
 
 import styles from "./styles.module.scss";
-import Icon from "../Icon/Icon";
+import Icon, { IconTypeKeys } from "../Icon/Icon";
 import SidebarApps from "../SidebarApps/SidebarApps";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 type Action = {
-  icon: string;
+  icon: IconTypeKeys;
   name: string;
   link: string;
   target: "" | "_blank";
 };
 
-export default function Sidebar() {
-  const actions: Action[] = [
-    {
-      icon: "add_circle",
-      name: "Add Keepix",
-      link: "https://keepix.io/setup",
-      target: "_blank",
-    },
-    {
-      icon: "monitor_heart",
-      name: "System monitor",
-      link: "/monitor",
-      target: "",
-    },
-    {
-      icon: "add_circle",
-      name: "Add Apps",
-      link: "/apps/add",
-      target: "",
-    },
-    {
-      icon: "tune",
-      name: "Preferences",
-      link: "/settings",
-      target: "",
-    },
-  ];
+const actions: Action[] = [
+  {
+    icon: "add_circle",
+    name: "Add Keepix",
+    link: "https://keepix.io/setup",
+    target: "_blank",
+  },
+  {
+    icon: "monitor_heart",
+    name: "System monitor",
+    link: "/monitor",
+    target: "",
+  },
+  {
+    icon: "add_circle",
+    name: "Add Apps",
+    link: "/apps/add",
+    target: "",
+  },
+  {
+    icon: "tune",
+    name: "Preferences",
+    link: "/settings",
+    target: "",
+  },
+];
 
+export default function Sidebar() {
   const pathName = usePathname();
 
   return (

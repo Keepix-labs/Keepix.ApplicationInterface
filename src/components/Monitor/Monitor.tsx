@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import AppsBase from "../Apps/AppsBase";
 import styles from "./styles.module.scss";
 import Loader from "../Loader/Loader";
+import { getErrorMsg } from "@/lib/utils";
+import BannerAlert from "../BannerAlert/BannerAlert";
 
 type Data = {
   cpu: string;
@@ -14,37 +16,51 @@ type Data = {
   };
 };
 
+const fetchUrl = `${process.env.NEXT_PUBLIC_API_URL}/monitoring/keepix`;
+
 export default function Monitor() {
   const [data, setData] = useState<Data | null>(null);
+  const [isDataLoading, setDataLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const checkData = () => {
+  const fetchData = () => {
     try {
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/monitoring/keepix`)
+      setError(null);
+      setDataLoading(true);
+
+      fetch(fetchUrl)
         .then((res) => res.json())
         .then((data: Data) => {
           setData(data);
 
           window.setTimeout(() => {
-            checkData();
+            fetchData();
           }, 1000);
         });
-    } catch (error) {
-      console.error(error);
+    } catch (e) {
+      setError(getErrorMsg(e));
+    } finally {
+      setDataLoading(false);
     }
   };
 
   useEffect(() => {
-    checkData();
+    fetchData();
   }, []);
-
-  if (!data) return <Loader />;
 
   return (
     <AppsBase title="Monitor">
-      <div className={styles.cpu}>CPU : {data.cpu}</div>
-      <div className={styles.memory}>
-        Memory : {data.memory.used} used of {data.memory.total}
-      </div>
+      {isDataLoading && <Loader />}
+      {error && <BannerAlert status="danger">{error}</BannerAlert>}
+
+      {data && (
+        <div className={styles.main}>
+          <div className={styles.cpu}>CPU : {data.cpu}</div>
+          <div className={styles.memory}>
+            Memory : {data.memory.used} used of {data.memory.total}
+          </div>
+        </div>
+      )}
     </AppsBase>
   );
 }

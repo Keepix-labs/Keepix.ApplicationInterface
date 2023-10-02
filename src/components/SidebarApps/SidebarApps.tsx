@@ -6,43 +6,59 @@ import Icon from "../Icon/Icon";
 import Link from "next/link";
 import Loader from "../Loader/Loader";
 import { useParams } from "next/navigation";
+import { getErrorMsg } from "@/lib/utils";
+import BannerAlert from "../BannerAlert/BannerAlert";
 
-type App = {
+type Data = {
   id: string;
   title: string;
   subTitle: string;
   installed: boolean;
-};
+}[];
+
+const fetchUrl = `${process.env.NEXT_PUBLIC_API_URL}/plugin/list`;
 
 export default function SidebarApps() {
   const params = useParams();
 
-  const [apps, setApps] = useState<App[]>([]);
-  const [isLoading, setLoading] = useState(true);
+  const [data, setData] = useState<Data>([]);
+  const [isDataLoading, setDataLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchData = () => {
+    try {
+      setError(null);
+      setDataLoading(true);
+
+      fetch(fetchUrl)
+        .then((res) => res.json())
+        .then((data: Data) => {
+          setData(data.filter((app) => app.installed));
+        });
+    } catch (e) {
+      setError(getErrorMsg(e));
+    } finally {
+      setDataLoading(false);
+    }
+  };
 
   useEffect(() => {
-    try {
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/plugin/list`)
-        .then((res) => res.json())
-        .then((data: App[]) => {
-          setApps(data.filter((app) => app.installed));
-          setLoading(false);
-        });
-    } catch (error) {
-      console.error(error);
-    }
+    fetchData();
   }, []);
 
   return (
     <div className={styles.main}>
       <div className={styles.title}>Apps</div>
-      {isLoading && <Loader />}
-      {!isLoading && !apps.length && (
+
+      {isDataLoading && <Loader />}
+      {error && <BannerAlert status="danger">{error}</BannerAlert>}
+
+      {!isDataLoading && !data.length && (
         <div className={styles.empty}>No app installed yet</div>
       )}
-      {apps.length !== 0 && (
+      {data.length !== 0 && (
         <ul className={styles.list}>
-          {apps.map((app, key) => (
+          {data.map((app, key) => (
             <li
               className={styles.item}
               key={key}

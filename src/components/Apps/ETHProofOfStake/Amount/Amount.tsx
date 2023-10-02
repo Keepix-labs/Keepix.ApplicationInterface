@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import Loader from "@/components/Loader/Loader";
 import Btn from "@/components/Btn/Btn";
 import FAQ from "@/components/FAQ/FAQ";
+import { getErrorMsg } from "@/lib/utils";
+import BannerAlert from "@/components/BannerAlert/BannerAlert";
 
 type Data = {
   componentName: string;
@@ -27,38 +29,45 @@ type DataSecretWallet = {
 export default function AppETHProofOfStakeAmount() {
   const params = useParams();
   const searchParams = useSearchParams();
-  const amount = searchParams.get("amount");
 
   const [data, setData] = useState<Data | null>(null);
+  const [isDataLoading, setDataLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [secretKeyDownloaded, setSecretKeyDownloaded] =
     useState<boolean>(false);
 
-  useEffect(() => {
-    if (!amount) {
-      return;
-    }
+  const amount = searchParams.get("amount") || "0";
+  const fetchUrl = `${process.env.NEXT_PUBLIC_API_URL}/plugin/${params["app-slug"]}/page/2?amount=${amount}`;
+  const fetchWalletSecretUrl = data
+    ? `${process.env.NEXT_PUBLIC_API_URL}/plugin/${params["app-slug"]}${data.values.retrieveWalletSecretEndpoint}`
+    : "";
 
+  const fetchData = () => {
     try {
-      fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/plugin/${params["app-slug"]}/page/2?amount=${amount}`
-      )
+      setError(null);
+      setDataLoading(true);
+
+      fetch(fetchUrl)
         .then((res) => res.json())
         .then((data: Data) => {
           setData(data);
         });
-    } catch (error) {
-      console.error(error);
+    } catch (e) {
+      setError(getErrorMsg(e));
+    } finally {
+      setDataLoading(false);
     }
-  }, []);
+  };
 
-  const getWalletSecret = () => {
+  const fetchWalletSecret = () => {
     if (!data) {
       return;
     }
     try {
-      fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/plugin/${params["app-slug"]}${data.values.retrieveWalletSecretEndpoint}`
-      )
+      setError(null);
+      setDataLoading(true);
+
+      fetch(fetchWalletSecretUrl)
         .then((res) => res.json())
         .then((data: DataSecretWallet) => {
           const element = document.createElement("a");
@@ -69,14 +78,17 @@ export default function AppETHProofOfStakeAmount() {
           element.click();
 
           setSecretKeyDownloaded(true);
-          console.log("ici");
         });
-    } catch (error) {
-      console.error(error);
+    } catch (e) {
+      setError(getErrorMsg(e));
+    } finally {
+      setDataLoading(false);
     }
   };
 
-  if (!data) return <Loader />;
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <AppsBase
@@ -87,15 +99,20 @@ export default function AppETHProofOfStakeAmount() {
         )
       }
     >
-      <div className={styles.main}>
-        <div className={styles.title}>{data.title}</div>
-        <div className={styles.cost}>
-          Cost : {data.values.amount} {data.values.currency}
+      {isDataLoading && <Loader />}
+      {error && <BannerAlert status="danger">{error}</BannerAlert>}
+
+      {data && (
+        <div className={styles.main}>
+          <div className={styles.title}>{data.title}</div>
+          <div className={styles.cost}>
+            Cost : {data.values.amount} {data.values.currency}
+          </div>
+          <div className={styles.address}>Address : {data.values.address}</div>
+          <Btn onClick={fetchWalletSecret}>Get Wallet Secret</Btn>
+          <FAQ />
         </div>
-        <div className={styles.address}>Address : {data.values.address}</div>
-        <Btn onClick={getWalletSecret}>Get Wallet Secret</Btn>
-        <FAQ />
-      </div>
+      )}
     </AppsBase>
   );
 }

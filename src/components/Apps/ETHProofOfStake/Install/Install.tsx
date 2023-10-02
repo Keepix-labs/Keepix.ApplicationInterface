@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import Loader from "@/components/Loader/Loader";
 import styles from "./styles.module.scss";
 import Btn from "@/components/Btn/Btn";
+import { getErrorMsg } from "@/lib/utils";
+import BannerAlert from "@/components/BannerAlert/BannerAlert";
 
 type Data = {
   componentName: string;
@@ -27,51 +29,62 @@ export default function AppETHProofOfStakeInstall() {
   const [data, setData] = useState<Data | null>(null);
   const [dataInstallState, setDataInstallState] =
     useState<DataInstallState | null>(null);
+  const [isDataLoading, setDataLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const checkInstallState = () => {
-    console.log("data", data);
+  const fetchUrl = `${process.env.NEXT_PUBLIC_API_URL}/plugin/${params["app-slug"]}/page/4`;
+  const fetchInstallStateUrl = data
+    ? `${process.env.NEXT_PUBLIC_API_URL}/plugin/${params["app-slug"]}${data.values.poolStateEndpoint}`
+    : "";
+
+  const fetchData = () => {
+    try {
+      setError(null);
+      setDataLoading(true);
+
+      fetch(fetchUrl)
+        .then((res) => res.json())
+        .then((data: Data) => {
+          setData(data);
+        });
+    } catch (e) {
+      setError(getErrorMsg(e));
+    } finally {
+      setDataLoading(false);
+    }
+  };
+
+  const fetchInstallState = () => {
     if (!data) {
       return;
     }
     try {
-      console.log(
-        `${process.env.NEXT_PUBLIC_API_URL}/plugin/${params["app-slug"]}${data.values.poolStateEndpoint}`
-      );
-      fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/plugin/${params["app-slug"]}${data.values.poolStateEndpoint}`
-      )
+      setError(null);
+      setDataLoading(true);
+
+      fetch(fetchInstallStateUrl)
         .then((res) => res.json())
         .then((data: DataInstallState) => {
           setDataInstallState(data);
 
           if (data.percentage !== 100) {
-            window.setTimeout(() => checkInstallState(), 1000);
+            window.setTimeout(() => fetchInstallState(), 1000);
           }
         });
-    } catch (error) {
-      console.error(error);
+    } catch (e) {
+      setError(getErrorMsg(e));
+    } finally {
+      setDataLoading(false);
     }
   };
 
   useEffect(() => {
-    try {
-      fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/plugin/${params["app-slug"]}/page/4`
-      )
-        .then((res) => res.json())
-        .then((data: Data) => {
-          setData(data);
-        });
-    } catch (error) {
-      console.error(error);
-    }
+    fetchData();
   }, []);
 
   useEffect(() => {
-    checkInstallState();
+    fetchInstallState();
   }, [data]);
-
-  if (!data) return <Loader />;
 
   return (
     <AppsBase
@@ -83,17 +96,22 @@ export default function AppETHProofOfStakeInstall() {
         )
       }
     >
-      <div className={styles.main}>
-        <div className={styles.title}>{data.title}</div>
-        {dataInstallState && dataInstallState.percentage !== 100 && (
-          <div className={styles.installState}>
-            Installation in progress : {dataInstallState.percentage}%
-          </div>
-        )}
-        {dataInstallState && dataInstallState.percentage === 100 && (
-          <div className={styles.installState}>Installation done !</div>
-        )}
-      </div>
+      {isDataLoading && <Loader />}
+      {error && <BannerAlert status="danger">{error}</BannerAlert>}
+
+      {data && (
+        <div className={styles.main}>
+          <div className={styles.title}>{data.title}</div>
+          {dataInstallState && dataInstallState.percentage !== 100 && (
+            <div className={styles.installState}>
+              Installation in progress : {dataInstallState.percentage}%
+            </div>
+          )}
+          {dataInstallState && dataInstallState.percentage === 100 && (
+            <div className={styles.installState}>Installation done !</div>
+          )}
+        </div>
+      )}
     </AppsBase>
   );
 }
