@@ -1,7 +1,21 @@
 "use client";
 
 import AppsBase from "../Apps/AppsBase";
+import styles from "./styles.module.scss";
 
 export default function Monitor() {
-  return <AppsBase title="Settings">Settings</AppsBase>;
+  return (
+    <AppsBase title="Settings">
+      <div className={styles.main}>
+        <div className={styles.runningApp}>
+          <span>Max number of running app :</span>
+          <input type="number" min="0" />
+        </div>
+        <div className={styles.runningApp}>
+          <span>Enable Led's of the Keepix :</span>
+          <input type="checkbox" />
+        </div>
+      </div>
+    </AppsBase>
+  );
 }
