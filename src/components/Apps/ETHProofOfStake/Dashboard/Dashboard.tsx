@@ -16,7 +16,7 @@ type Data = {
     subTitle: string;
     description: string;
     poolStateEndpoint: string;
-    // status: "INSTALLED" | "NOT_INSTALLED";
+    installed: boolean;
     state: string;
     alerts: string[];
     APY: {
