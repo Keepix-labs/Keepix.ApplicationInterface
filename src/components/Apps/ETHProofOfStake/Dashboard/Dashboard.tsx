@@ -12,7 +12,42 @@ type Data = {
   componentName: string;
   title: string;
   values: {
+    title: string;
+    subTitle: string;
+    description: string;
     poolStateEndpoint: string;
+    // status: "INSTALLED" | "NOT_INSTALLED";
+    state: string;
+    alerts: string[];
+    APY: {
+      "7d": string;
+      "30d": string;
+      "1Y": string;
+    };
+    locked: {
+      ETH: string;
+      RPL: string;
+    };
+    stakingType: string;
+    rewards: {
+      "24h": string;
+      "7d": string;
+      total: string;
+    };
+    memory: {
+      free: string;
+      used: string;
+      total: string;
+    };
+    grafanaLink: string;
+    etherScanLink: string;
+    beanconScanLink: string;
+    ipcLogsStreamEndpoint: string;
+    ipcPostCommandLineEndpoint: string;
+    stopEndpoint: string;
+    startEndpoint: string;
+    uninstallEndpoint: string;
+    withdrawPostRewardsEndpoint: string;
   };
 };
 
