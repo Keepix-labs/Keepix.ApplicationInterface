@@ -8,6 +8,7 @@ import Loader from "@/components/Loader/Loader";
 import Btn from "@/components/Btn/Btn";
 import { getErrorMsg } from "@/lib/utils";
 import BannerAlert from "@/components/BannerAlert/BannerAlert";
+import { useAPIContext } from "@/context/api/APIProvider";
 
 type LoanInfo = {
   value: string;
@@ -30,6 +31,7 @@ type Data = {
 
 export default function AppETHProofOfStakeSetup() {
   const params = useParams();
+  const { setIsAPIDown } = useAPIContext();
 
   const [data, setData] = useState<Data | null>(null);
   const [isDataLoading, setDataLoading] = useState(true);
@@ -43,24 +45,25 @@ export default function AppETHProofOfStakeSetup() {
   const fetchUrl = `${process.env.NEXT_PUBLIC_API_URL}/plugin/${params["app-slug"]}/page/1`;
   const inputOptions = [8, 16, 32];
 
-  const fetchData = () => {
+  const fetchData = async () => {
+    let response: Response;
+    let tempData: Data;
+
     try {
       setError(null);
       setDataLoading(true);
 
-      fetch(fetchUrl)
-        .then((res) => res.json())
-        .then((data: Data) => {
-          setData(data);
-          setCurrentInputOptionIndex(
-            inputOptions.indexOf(parseInt(data.values.amount.defaultValue))
-          );
-          setCurrentLoanInfos(
-            data.values.amount.values.find(
-              (value) => value.value === data.values.amount.defaultValue
-            ) ?? null
-          );
-        });
+      response = await fetch(fetchUrl);
+      tempData = await response.json();
+      setData(tempData);
+      setCurrentInputOptionIndex(
+        inputOptions.indexOf(parseInt(tempData.values.amount.defaultValue))
+      );
+      setCurrentLoanInfos(
+        tempData.values.amount.values.find(
+          (value) => value.value === tempData.values.amount.defaultValue
+        ) ?? null
+      );
     } catch (e) {
       setError(getErrorMsg(e));
     } finally {
@@ -71,6 +74,12 @@ export default function AppETHProofOfStakeSetup() {
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (error === "Failed to fetch") {
+      setIsAPIDown(true);
+    }
+  }, [error]);
 
   const onChange = (evt: ChangeEvent<HTMLInputElement>) => {
     if (!data) {

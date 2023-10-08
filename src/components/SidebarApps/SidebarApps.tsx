@@ -1,13 +1,14 @@
 "use client";
 
 import styles from "./styles.module.scss";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Icon from "../Icon/Icon";
 import Link from "next/link";
 import Loader from "../Loader/Loader";
 import { useParams } from "next/navigation";
 import { getErrorMsg } from "@/lib/utils";
 import BannerAlert from "../BannerAlert/BannerAlert";
+import { useAPIContext } from "@/context/api/APIProvider";
 
 type Data = {
   id: string;
@@ -20,21 +21,23 @@ const fetchUrl = `${process.env.NEXT_PUBLIC_API_URL}/plugin/list`;
 
 export default function SidebarApps() {
   const params = useParams();
+  const { setIsAPIDown } = useAPIContext();
 
   const [data, setData] = useState<Data>([]);
   const [isDataLoading, setDataLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchData = () => {
+  const fetchData = async () => {
+    let response: Response;
+    let tempData: Data;
+
     try {
       setError(null);
       setDataLoading(true);
 
-      fetch(fetchUrl)
-        .then((res) => res.json())
-        .then((data: Data) => {
-          setData(data.filter((app) => app.installed));
-        });
+      response = await fetch(fetchUrl);
+      tempData = await response.json();
+      setData(tempData.filter((app) => app.installed));
     } catch (e) {
       setError(getErrorMsg(e));
     } finally {
@@ -45,6 +48,12 @@ export default function SidebarApps() {
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (error === "Failed to fetch") {
+      setIsAPIDown(true);
+    }
+  }, [error]);
 
   return (
     <div className={styles.main}>

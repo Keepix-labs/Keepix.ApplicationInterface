@@ -9,6 +9,7 @@ import Btn from "@/components/Btn/Btn";
 import FAQ from "@/components/FAQ/FAQ";
 import { getErrorMsg } from "@/lib/utils";
 import BannerAlert from "@/components/BannerAlert/BannerAlert";
+import { useAPIContext } from "@/context/api/APIProvider";
 
 type Data = {
   componentName: string;
@@ -29,6 +30,7 @@ type DataSecretWallet = {
 export default function AppETHProofOfStakeAmount() {
   const params = useParams();
   const searchParams = useSearchParams();
+  const { setIsAPIDown } = useAPIContext();
 
   const [data, setData] = useState<Data | null>(null);
   const [isDataLoading, setDataLoading] = useState(true);
@@ -42,16 +44,17 @@ export default function AppETHProofOfStakeAmount() {
     ? `${process.env.NEXT_PUBLIC_API_URL}/plugin/${params["app-slug"]}${data.values.retrieveWalletSecretEndpoint}`
     : "";
 
-  const fetchData = () => {
+  const fetchData = async () => {
+    let response: Response;
+    let tempData: Data;
+
     try {
       setError(null);
       setDataLoading(true);
 
-      fetch(fetchUrl)
-        .then((res) => res.json())
-        .then((data: Data) => {
-          setData(data);
-        });
+      response = await fetch(fetchUrl);
+      tempData = await response.json();
+      setData(tempData);
     } catch (e) {
       setError(getErrorMsg(e));
     } finally {
@@ -59,26 +62,29 @@ export default function AppETHProofOfStakeAmount() {
     }
   };
 
-  const fetchWalletSecret = () => {
+  const fetchWalletSecret = async () => {
     if (!data) {
       return;
     }
+
+    let response: Response;
+    let tempData: DataSecretWallet;
+
     try {
       setError(null);
       setDataLoading(true);
 
-      fetch(fetchWalletSecretUrl)
-        .then((res) => res.json())
-        .then((data: DataSecretWallet) => {
-          const element = document.createElement("a");
-          const file = new Blob([data.privateKey], { type: "text/plain" });
-          element.href = URL.createObjectURL(file);
-          element.download = "secretKey.txt";
-          document.body.appendChild(element);
-          element.click();
+      response = await fetch(fetchUrl);
+      tempData = await response.json();
 
-          setSecretKeyDownloaded(true);
-        });
+      const element = document.createElement("a");
+      const file = new Blob([tempData.privateKey], { type: "text/plain" });
+      element.href = URL.createObjectURL(file);
+      element.download = "secretKey.txt";
+      document.body.appendChild(element);
+      element.click();
+
+      setSecretKeyDownloaded(true);
     } catch (e) {
       setError(getErrorMsg(e));
     } finally {
@@ -89,6 +95,12 @@ export default function AppETHProofOfStakeAmount() {
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (error === "Failed to fetch") {
+      setIsAPIDown(true);
+    }
+  }, [error]);
 
   return (
     <AppsBase

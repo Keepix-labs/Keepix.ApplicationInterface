@@ -8,6 +8,7 @@ import styles from "./styles.module.scss";
 import Btn from "@/components/Btn/Btn";
 import { getErrorMsg } from "@/lib/utils";
 import BannerAlert from "@/components/BannerAlert/BannerAlert";
+import { useAPIContext } from "@/context/api/APIProvider";
 
 type Data = {
   componentName: string;
@@ -25,6 +26,7 @@ type DataInstallState = {
 
 export default function AppETHProofOfStakeInstall() {
   const params = useParams();
+  const { setIsAPIDown } = useAPIContext();
 
   const [data, setData] = useState<Data | null>(null);
   const [dataInstallState, setDataInstallState] =
@@ -37,16 +39,17 @@ export default function AppETHProofOfStakeInstall() {
     ? `${process.env.NEXT_PUBLIC_API_URL}/plugin/${params["app-slug"]}${data.values.poolStateEndpoint}`
     : "";
 
-  const fetchData = () => {
+  const fetchData = async () => {
+    let response: Response;
+    let tempData: Data;
+
     try {
       setError(null);
       setDataLoading(true);
 
-      fetch(fetchUrl)
-        .then((res) => res.json())
-        .then((data: Data) => {
-          setData(data);
-        });
+      response = await fetch(fetchUrl);
+      tempData = await response.json();
+      setData(tempData);
     } catch (e) {
       setError(getErrorMsg(e));
     } finally {
@@ -54,23 +57,25 @@ export default function AppETHProofOfStakeInstall() {
     }
   };
 
-  const fetchInstallState = () => {
+  const fetchInstallState = async () => {
     if (!data) {
       return;
     }
+
+    let response: Response;
+    let tempData: DataInstallState;
+
     try {
       setError(null);
       setDataLoading(true);
 
-      fetch(fetchInstallStateUrl)
-        .then((res) => res.json())
-        .then((data: DataInstallState) => {
-          setDataInstallState(data);
+      response = await fetch(fetchInstallStateUrl);
+      tempData = await response.json();
+      setDataInstallState(tempData);
 
-          if (data.percentage !== 100) {
-            window.setTimeout(() => fetchInstallState(), 1000);
-          }
-        });
+      if (tempData.percentage !== 100) {
+        window.setTimeout(() => fetchInstallState(), 1000);
+      }
     } catch (e) {
       setError(getErrorMsg(e));
     } finally {
@@ -85,6 +90,12 @@ export default function AppETHProofOfStakeInstall() {
   useEffect(() => {
     fetchInstallState();
   }, [data]);
+
+  useEffect(() => {
+    if (error === "Failed to fetch") {
+      setIsAPIDown(true);
+    }
+  }, [error]);
 
   return (
     <AppsBase

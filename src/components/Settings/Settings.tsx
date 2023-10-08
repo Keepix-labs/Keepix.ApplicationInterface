@@ -12,7 +12,7 @@ export default function Monitor() {
           <input type="number" min="0" />
         </div>
         <div className={styles.runningApp}>
-          <span>Enable Led's of the Keepix :</span>
+          <span>Enable Leds of the Keepix :</span>
           <input type="checkbox" />
         </div>
       </div>

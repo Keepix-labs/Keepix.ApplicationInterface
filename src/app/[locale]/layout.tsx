@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
+import APIProvider from "@/context/api/APIProvider";
 
 type Props = {
   children: React.ReactNode;
@@ -18,7 +19,7 @@ const clashdisplay = localFont({
   src: "../../fonts/clashdisplay/ClashDisplay-Variable.woff2",
 });
 
-export const metadata: Metadata = {
+const metadata: Metadata = {
   title: "Keepix",
   description: "Staking cryptocurrency at home has never been easier.",
 };
@@ -44,9 +45,11 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body className={satoshi.className}>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          {children}
-        </NextIntlClientProvider>
+        <APIProvider>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            {children}
+          </NextIntlClientProvider>
+        </APIProvider>
       </body>
     </html>
   );
