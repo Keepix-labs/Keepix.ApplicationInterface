@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import AppsBase from "../Apps/AppsBase";
 import styles from "./styles.module.scss";
 import Loader from "../Loader/Loader";
-import { getErrorMsg } from "@/lib/utils";
+import { getErrorMsg, safeFetch } from "@/lib/utils";
 import BannerAlert from "../BannerAlert/BannerAlert";
 import { useAPIContext } from "@/context/api/APIProvider";
 
@@ -20,7 +20,7 @@ type Data = {
 const fetchUrl = `${process.env.NEXT_PUBLIC_API_URL}/monitoring/keepix`;
 
 export default function Monitor() {
-  const { setIsAPIDown } = useAPIContext();
+  const { setAPIState } = useAPIContext();
 
   const [data, setData] = useState<Data | null>(null);
   const [isDataLoading, setDataLoading] = useState(true);
@@ -34,7 +34,7 @@ export default function Monitor() {
       setError(null);
       setDataLoading(true);
 
-      response = await fetch(fetchUrl);
+      response = await safeFetch(fetchUrl, setAPIState);
       tempData = await response.json();
       setData(data);
 
@@ -51,12 +51,6 @@ export default function Monitor() {
   useEffect(() => {
     fetchData();
   }, []);
-
-  useEffect(() => {
-    if (error === "Failed to fetch") {
-      setIsAPIDown(true);
-    }
-  }, [error]);
 
   return (
     <AppsBase title="Monitor">

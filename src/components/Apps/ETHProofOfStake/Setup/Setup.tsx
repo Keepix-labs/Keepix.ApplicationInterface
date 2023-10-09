@@ -6,7 +6,7 @@ import styles from "./styles.module.scss";
 import { ChangeEvent, useEffect, useState } from "react";
 import Loader from "@/components/Loader/Loader";
 import Btn from "@/components/Btn/Btn";
-import { getErrorMsg } from "@/lib/utils";
+import { getErrorMsg, safeFetch } from "@/lib/utils";
 import BannerAlert from "@/components/BannerAlert/BannerAlert";
 import { useAPIContext } from "@/context/api/APIProvider";
 
@@ -31,7 +31,7 @@ type Data = {
 
 export default function AppETHProofOfStakeSetup() {
   const params = useParams();
-  const { setIsAPIDown } = useAPIContext();
+  const { setAPIState } = useAPIContext();
 
   const [data, setData] = useState<Data | null>(null);
   const [isDataLoading, setDataLoading] = useState(true);
@@ -45,6 +45,20 @@ export default function AppETHProofOfStakeSetup() {
   const fetchUrl = `${process.env.NEXT_PUBLIC_API_URL}/plugin/${params["app-slug"]}/page/1`;
   const inputOptions = [8, 16, 32];
 
+  const onChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    if (!data) {
+      return;
+    }
+
+    setCurrentInputOptionIndex(parseInt(evt.target.value));
+    setCurrentLoanInfos(
+      data.values.amount.values.find(
+        (value) =>
+          value.value === inputOptions[parseInt(evt.target.value)].toString()
+      ) ?? null
+    );
+  };
+
   const fetchData = async () => {
     let response: Response;
     let tempData: Data;
@@ -53,7 +67,7 @@ export default function AppETHProofOfStakeSetup() {
       setError(null);
       setDataLoading(true);
 
-      response = await fetch(fetchUrl);
+      response = await safeFetch(fetchUrl, setAPIState);
       tempData = await response.json();
       setData(tempData);
       setCurrentInputOptionIndex(
@@ -74,26 +88,6 @@ export default function AppETHProofOfStakeSetup() {
   useEffect(() => {
     fetchData();
   }, []);
-
-  useEffect(() => {
-    if (error === "Failed to fetch") {
-      setIsAPIDown(true);
-    }
-  }, [error]);
-
-  const onChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    if (!data) {
-      return;
-    }
-
-    setCurrentInputOptionIndex(parseInt(evt.target.value));
-    setCurrentLoanInfos(
-      data.values.amount.values.find(
-        (value) =>
-          value.value === inputOptions[parseInt(evt.target.value)].toString()
-      ) ?? null
-    );
-  };
 
   return (
     <AppsBase

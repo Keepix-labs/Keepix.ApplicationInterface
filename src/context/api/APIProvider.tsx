@@ -8,12 +8,13 @@ import {
   useContext,
   Dispatch,
   SetStateAction,
-  useEffect,
 } from "react";
 
+export type APIState = "UP" | "WAITING" | "UNREACHABLE";
+
 type APIContextValue = {
-  isAPIDown: boolean | null;
-  setIsAPIDown: Dispatch<SetStateAction<boolean | null>>;
+  apiState: APIState | null;
+  setAPIState: Dispatch<SetStateAction<APIState | null>>;
 };
 
 export const APIContext = createContext<APIContextValue | undefined>(undefined);
@@ -31,13 +32,19 @@ export const useAPIContext = () => {
 };
 
 export default function APIProvider({ children }: Props) {
-  const [isAPIDown, setIsAPIDown] =
-    useState<APIContextValue["isAPIDown"]>(false);
+  const [apiState, setAPIState] = useState<APIContextValue["apiState"]>(null);
 
   return (
-    <APIContext.Provider value={{ isAPIDown, setIsAPIDown }}>
+    <APIContext.Provider value={{ apiState, setAPIState }}>
       {children}
-      {isAPIDown && (
+      {apiState === "WAITING" && (
+        <div className={styles.main}>
+          <div className={styles.text}>
+            Trying to reconnect to your Keepix please wait.
+          </div>
+        </div>
+      )}
+      {apiState === "UNREACHABLE" && (
         <div className={styles.main}>
           <div className={styles.text}>
             Keepix network unreachable, please reset the network using the WAP

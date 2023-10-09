@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import Loader from "@/components/Loader/Loader";
 import styles from "./styles.module.scss";
 import Btn from "@/components/Btn/Btn";
-import { getErrorMsg } from "@/lib/utils";
+import { getErrorMsg, safeFetch } from "@/lib/utils";
 import BannerAlert from "@/components/BannerAlert/BannerAlert";
 import { useAPIContext } from "@/context/api/APIProvider";
 
@@ -26,7 +26,7 @@ type DataInstallState = {
 
 export default function AppETHProofOfStakeInstall() {
   const params = useParams();
-  const { setIsAPIDown } = useAPIContext();
+  const { setAPIState } = useAPIContext();
 
   const [data, setData] = useState<Data | null>(null);
   const [dataInstallState, setDataInstallState] =
@@ -47,7 +47,7 @@ export default function AppETHProofOfStakeInstall() {
       setError(null);
       setDataLoading(true);
 
-      response = await fetch(fetchUrl);
+      response = await safeFetch(fetchUrl, setAPIState);
       tempData = await response.json();
       setData(tempData);
     } catch (e) {
@@ -69,7 +69,7 @@ export default function AppETHProofOfStakeInstall() {
       setError(null);
       setDataLoading(true);
 
-      response = await fetch(fetchInstallStateUrl);
+      response = await safeFetch(fetchInstallStateUrl, setAPIState);
       tempData = await response.json();
       setDataInstallState(tempData);
 
@@ -90,12 +90,6 @@ export default function AppETHProofOfStakeInstall() {
   useEffect(() => {
     fetchInstallState();
   }, [data]);
-
-  useEffect(() => {
-    if (error === "Failed to fetch") {
-      setIsAPIDown(true);
-    }
-  }, [error]);
 
   return (
     <AppsBase
