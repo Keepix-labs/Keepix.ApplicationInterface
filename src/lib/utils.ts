@@ -29,7 +29,11 @@ export const safeFetch = async (
     await new Promise((r) => setTimeout(r, 3000));
 
     try {
-      res = await fetch(url);
+      res = await fetch(url, {
+        headers: {
+          "Cache-Control": "no-cache",
+        },
+      });
     } catch (error) {
       setAPIState("UNREACHABLE");
       throw new Error("API not reachable");
