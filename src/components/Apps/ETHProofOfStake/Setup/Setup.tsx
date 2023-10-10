@@ -18,14 +18,10 @@ type LoanInfo = {
 };
 
 type Data = {
-  componentName: string;
   title: string;
-  nextPage: string;
-  values: {
-    amount: {
-      defaultValue: string;
-      values: LoanInfo[];
-    };
+  amount: {
+    defaultValue: string;
+    values: LoanInfo[];
   };
 };
 
@@ -52,7 +48,7 @@ export default function AppETHProofOfStakeSetup() {
 
     setCurrentInputOptionIndex(parseInt(evt.target.value));
     setCurrentLoanInfos(
-      data.values.amount.values.find(
+      data.amount.values.find(
         (value) =>
           value.value === inputOptions[parseInt(evt.target.value)].toString()
       ) ?? null
@@ -71,11 +67,11 @@ export default function AppETHProofOfStakeSetup() {
       tempData = await response.json();
       setData(tempData);
       setCurrentInputOptionIndex(
-        inputOptions.indexOf(parseInt(tempData.values.amount.defaultValue))
+        inputOptions.indexOf(parseInt(tempData.amount.defaultValue))
       );
       setCurrentLoanInfos(
-        tempData.values.amount.values.find(
-          (value) => value.value === tempData.values.amount.defaultValue
+        tempData.amount.values.find(
+          (value) => value.value === tempData.amount.defaultValue
         ) ?? null
       );
     } catch (e) {

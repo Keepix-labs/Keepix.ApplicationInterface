@@ -12,15 +12,10 @@ import BannerAlert from "@/components/BannerAlert/BannerAlert";
 import { useAPIContext } from "@/context/api/APIProvider";
 
 type Data = {
-  componentName: string;
   title: string;
-  nextPage: string;
-  values: {
-    amount: string;
-    currency: string;
-    address: string;
-    retrieveWalletSecretEndpoint: string;
-  };
+  amount: string;
+  currency: string;
+  address: string;
 };
 
 type DataSecretWallet = {
@@ -39,10 +34,8 @@ export default function AppETHProofOfStakeAmount() {
     useState<boolean>(false);
 
   const amount = searchParams.get("amount") || "0";
-  const fetchUrl = `${process.env.NEXT_PUBLIC_API_URL}/plugin/${params["app-slug"]}/page/2?amount=${amount}`;
-  const fetchWalletSecretUrl = data
-    ? `${process.env.NEXT_PUBLIC_API_URL}/plugin/${params["app-slug"]}${data.values.retrieveWalletSecretEndpoint}`
-    : "";
+  const fetchUrl = `${process.env.NEXT_PUBLIC_API_URL}/plugin/${params["app-slug"]}/page/3?amount=${amount}`;
+  const fetchWalletSecretUrl = `${process.env.NEXT_PUBLIC_API_URL}/plugin/${params["app-slug"]}/wallet-secret`;
 
   const fetchData = async () => {
     let response: Response;
@@ -112,9 +105,9 @@ export default function AppETHProofOfStakeAmount() {
         <div className={styles.main}>
           <div className={styles.title}>{data.title}</div>
           <div className={styles.cost}>
-            Cost : {data.values.amount} {data.values.currency}
+            Cost : {data.amount} {data.currency}
           </div>
-          <div className={styles.address}>Address : {data.values.address}</div>
+          <div className={styles.address}>Address : {data.address}</div>
           <Btn onClick={fetchWalletSecret}>Get Wallet Secret</Btn>
           <FAQ />
         </div>

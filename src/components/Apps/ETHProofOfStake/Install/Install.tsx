@@ -11,13 +11,7 @@ import BannerAlert from "@/components/BannerAlert/BannerAlert";
 import { useAPIContext } from "@/context/api/APIProvider";
 
 type Data = {
-  componentName: string;
   title: string;
-  nextPage: string;
-  values: {
-    poolStateEndpoint: string;
-    whenFinished: string;
-  };
 };
 
 type DataInstallState = {
@@ -34,10 +28,8 @@ export default function AppETHProofOfStakeInstall() {
   const [isDataLoading, setDataLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchUrl = `${process.env.NEXT_PUBLIC_API_URL}/plugin/${params["app-slug"]}/page/4`;
-  const fetchInstallStateUrl = data
-    ? `${process.env.NEXT_PUBLIC_API_URL}/plugin/${params["app-slug"]}${data.values.poolStateEndpoint}`
-    : "";
+  const fetchUrl = `${process.env.NEXT_PUBLIC_API_URL}/plugin/${params["app-slug"]}/page/5`;
+  const fetchInstallStateUrl = `${process.env.NEXT_PUBLIC_API_URL}/plugin/${params["app-slug"]}/install-state`;
 
   const fetchData = async () => {
     let response: Response;
