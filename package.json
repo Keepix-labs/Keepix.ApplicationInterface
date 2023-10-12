@@ -15,6 +15,7 @@
     "react-dom": "latest"
   },
   "devDependencies": {
+    "@iconify-icon/react": "^1.0.8",
     "@svgr/webpack": "^8.1.0",
     "@types/node": "latest",
     "@types/react": "latest",

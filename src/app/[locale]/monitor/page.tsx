@@ -4,9 +4,9 @@ import Monitor from "@/components/Monitor/Monitor";
 
 export default function MonitorView() {
   return (
-    <main className={styles.main}>
+    <>
       <Sidebar />
       <Monitor />
-    </main>
+    </>
   );
 }

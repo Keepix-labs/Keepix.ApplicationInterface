@@ -1,8 +1,17 @@
 .main {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding: var(--padding-main);
+  padding: calc(var(--marge-primary) + var(--marge-secondary));
+  padding-left: calc(var(--sidebar-width) + var(--marge-secondary));
+  background-color: var(--bg-primary);
+
+  &::before {
+    content: '';
+    inset: var(--marge-primary);
+    left: var(--sidebar-width);
+    position: fixed;
+    border-radius: var(--radius-primary);
+    z-index: 100;
+    box-shadow: 0 0 0 var(--sidebar-width) var(--bg-body);
+  }
 }
 
 .header {
@@ -37,11 +46,6 @@
     font-size: 14px;
     font-weight: 100;
   }
-}
-
-.content {
-  height: 100%;
-  padding: 24px 8px;
 }
 
 .footer {

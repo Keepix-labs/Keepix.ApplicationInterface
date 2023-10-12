@@ -2,7 +2,6 @@
 
 import styles from "./styles.module.scss";
 import { useEffect, useState } from "react";
-import Icon from "../Icon/Icon";
 import Link from "next/link";
 import Loader from "../Loader/Loader";
 import { useParams } from "next/navigation";
@@ -69,7 +68,7 @@ export default function SidebarApps() {
             >
               <Link href={`/apps/${app.id}`} className={styles.itemLink}>
                 <div className={styles.itemIcon}>
-                  <Icon name="web_asset" />
+                  {/* <Icon name="web_asset" /> */}
                 </div>
                 <div className={styles.itemContent}>
                   <span className={styles.itemTitle}>{app.title}</span>

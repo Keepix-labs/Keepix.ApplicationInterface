@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import AppsBase from "../AppsBase";
 import styles from "./styles.module.scss";
-import Icon from "@/components/Icon/Icon";
 import Loader from "@/components/Loader/Loader";
 import Btn from "@/components/Btn/Btn";
 import { getErrorMsg, safeFetch } from "@/lib/utils";
@@ -58,7 +57,7 @@ export default function AppsStore() {
               {data.map((app, key) => (
                 <li className={styles.item} key={key}>
                   <div className={styles.itemIcon}>
-                    <Icon name="web_asset" />
+                    {/* <Icon name="web_asset" /> */}
                   </div>
                   <div className={styles.itemContent}>
                     <span className={styles.itemTitle}>{app.title}</span>

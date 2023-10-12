@@ -15,9 +15,9 @@ export default function AppsSlugAmountView() {
   const params = useParams();
 
   return (
-    <main className={styles.main}>
+    <>
       <Sidebar />
       {params["app-slug"] && apps[params["app-slug"] as string]()}
-    </main>
+    </>
   );
 }

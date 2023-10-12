@@ -1,13 +1,14 @@
 "use client";
 
 import styles from "./styles.module.scss";
-import Icon, { IconTypeKeys } from "../Icon/Icon";
 import SidebarApps from "../SidebarApps/SidebarApps";
+import Logo from "../Logo/Logo";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Icon } from '@iconify-icon/react';
 
 type Action = {
-  icon: IconTypeKeys;
+  icon: string;
   name: string;
   link: string;
   target: "" | "_blank";
@@ -15,25 +16,25 @@ type Action = {
 
 const actions: Action[] = [
   {
-    icon: "add_circle",
+    icon: "ph:plus-circle",
     name: "Add Keepix",
     link: "https://keepix.io/setup",
     target: "_blank",
   },
   {
-    icon: "monitor_heart",
+    icon: "ph:activity",
     name: "System monitor",
     link: "/monitor",
     target: "",
   },
   {
-    icon: "add_circle",
+    icon: "ph:plus-square",
     name: "Add Apps",
     link: "/apps/add",
     target: "",
   },
   {
-    icon: "tune",
+    icon: "ph:sliders-horizontal",
     name: "Preferences",
     link: "/settings",
     target: "",
@@ -44,19 +45,19 @@ export default function Sidebar() {
   const pathName = usePathname();
 
   return (
-    <div className={styles.main}>
-      <div>
-        <Link href={"/"} className={styles.logo}>
-          logo
-        </Link>
+    <aside className={styles.sidebar}>
+      <Link href={"/"} className={styles.sidebarLogo}>
+        <Logo />
+        <span>v0.1.0</span>
+      </Link>
+      <div className={styles.sidebarContent}>
         <SidebarApps />
       </div>
-      <div className={styles.menu}>
-        <ul className={styles.list}>
+      <nav className={styles.nav}>
+        <ul>
           {actions.map((action, key) => (
             <li
               data-active={pathName === action.link}
-              className={styles.item}
               key={key}
             >
               <Link
@@ -64,13 +65,13 @@ export default function Sidebar() {
                 target={action.target}
                 className={styles.link}
               >
-                <Icon name={action.icon} />
+                <Icon icon={action.icon} />
                 <span>{action.name}</span>
               </Link>
             </li>
           ))}
         </ul>
-      </div>
-    </div>
+      </nav>
+    </aside>
   );
 }

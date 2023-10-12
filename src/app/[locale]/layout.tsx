@@ -1,4 +1,4 @@
-import "../../scss/normalize.scss";
+import "../../scss/reset.scss";
 import "../../scss/variables.scss";
 import "../../scss/globals.scss";
 import type { Metadata } from "next";
@@ -6,6 +6,7 @@ import localFont from "next/font/local";
 import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import APIProvider from "@/context/api/APIProvider";
+import Sprites from '@/components/Sprites/Sprites';
 
 type Props = {
   children: React.ReactNode;
@@ -50,6 +51,7 @@ export default async function RootLayout({
             {children}
           </NextIntlClientProvider>
         </APIProvider>
+        <Sprites />
       </body>
     </html>
   );

@@ -1,7 +1,14 @@
-.main {
-  padding: 8px;
-  background-color: var(--c-white);
-  color: var(--c-black);
-  border-radius: 8px;
-  margin: 8px 0;
+.loader {
+  background-color: rgba(var(--bg-secondary-rgb) / 2%);
+  text-align: center;
+  padding: 1.15em;
+  border-radius: 1em;
+  gap: .65em;
+  display: flex;
+  align-items: center;
+
+  span {
+    font-size: .9em;
+    color: var(--txt-secondary);
+  }
 }

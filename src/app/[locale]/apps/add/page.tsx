@@ -6,9 +6,9 @@ import Sidebar from "@/components/Sidebar/Sidebar";
 
 export default function AppsSlugAddView() {
   return (
-    <main className={styles.main}>
+    <>
       <Sidebar />
       <AppsStore />
-    </main>
+    </>
   );
 }
