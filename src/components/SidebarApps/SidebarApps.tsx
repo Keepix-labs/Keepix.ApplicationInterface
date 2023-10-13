@@ -51,12 +51,12 @@ export default function SidebarApps() {
   return (
     <div className={styles.main}>
       <div className={styles.title}>Apps</div>
-
+    
       {isDataLoading && <Loader />}
       {error && <BannerAlert status="danger">{error}</BannerAlert>}
 
       {!isDataLoading && !data.length && (
-        <div className={styles.empty}>No app installed yet</div>
+       <BannerAlert status="info">No app installed yet.</BannerAlert>
       )}
       {data.length !== 0 && (
         <ul className={styles.list}>

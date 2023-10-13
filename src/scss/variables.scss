@@ -6,17 +6,16 @@
 	--cubic: cubic-bezier(.305, .045, .355, 1);
 	--transition-link: .3s;
 
-	/* Fonts */
-	--font-family-main: 'Satoshi', Helvetica, Arial, sans-serif;
-	--font-family-heading: 'Clash Display', Helvetica, Arial, sans-serif;
-
 	/* Background */
+	--opacity-primary: 4%;
+	--opacity-secondary: 2%;
+
 	--bg-body-rgb: 16 16 16;
 	--bg-body: rgb(var(--bg-body-rgb));
 	--bg-primary-rgb: 0 0 0;
 	--bg-primary: rgb(var(--bg-primary-rgb));
 	--bg-secondary-rgb: 255 255 255;
-	--bg-secondary: rgb(var(--bg-secondary-rgb) / 4%);
+	--bg-secondary: rgb(var(--bg-secondary-rgb) / var(--opacity-primary));
 
 	/* Txt */
 	--txt-primary-rgb: 255 255 255;
@@ -25,12 +24,18 @@
 	--txt-secondary: rgba(var(--txt-secondary-rgb) / 40%);
 
 	/* Color */
-	--error-rgb: 247 81 69; 
-	--error: rgb(var(--error-rgb));
+	--danger-rgb: 247 81 69; 
+	--danger: rgb(var(--danger-rgb));
+	--warning-rgb: 252 119 3;
+	--warning: rgb(var(--warning-rgb));
+	--success-rgb: 71 199 46; 
+	--success: rgb(var(--success-rgb));
+	--info-rgb: 125 44 212; 
+	--info: rgb(var(--info-rgb));
 
 	/* Marge */
 	--marge-primary: calc(20px + 7 * (100vw - 320px) / 1080);
-	--marge-secondary: calc(30px + 15 * (100vw - 320px) / 1080);
+	--marge-secondary: calc(30px + 30 * (100vw - 320px) / 1080);
 
 	/* Border */
 	--radius-primary: calc(15px + 5 * (100vw - 320px) / 1080);

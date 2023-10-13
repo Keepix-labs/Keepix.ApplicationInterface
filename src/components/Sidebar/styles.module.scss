@@ -56,6 +56,12 @@
     flex-direction: column;
     gap: 1px;
 
+    [data-active=true] {
+      a {
+        background-color: var(--bg-secondary);
+      }
+    }
+
     a {
       padding: 1em;
       border-radius: .85em;

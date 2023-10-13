@@ -53,7 +53,7 @@ export default function Monitor() {
   }, []);
 
   return (
-    <AppsBase title="Monitor">
+    <AppsBase title="Monitor" icon="ph:activity">
       {isDataLoading && <Loader />}
       {error && <BannerAlert status="danger">{error}</BannerAlert>}
 

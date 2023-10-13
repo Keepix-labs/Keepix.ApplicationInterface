@@ -15,9 +15,11 @@ type Props = {
 
 const satoshi = localFont({
   src: "../../fonts/satoshi/Satoshi-Variable.woff2",
+  variable: "--font-family-main"
 });
 const clashdisplay = localFont({
   src: "../../fonts/clashdisplay/ClashDisplay-Variable.woff2",
+  variable: "--font-family-heading"
 });
 
 const metadata: Metadata = {
@@ -45,7 +47,7 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <body className={satoshi.className}>
+      <body className={satoshi.className + ' ' + clashdisplay.variable}>
         <APIProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
             {children}

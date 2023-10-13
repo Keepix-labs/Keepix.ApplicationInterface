@@ -5,7 +5,7 @@ import styles from "./styles.module.scss";
 
 export default function Monitor() {
   return (
-    <AppsBase title="Settings">
+    <AppsBase title="Settings" subTitle="Define your Keepix preferences" icon="ph:sliders-horizontal">
       <div className={styles.main}>
         <div className={styles.runningApp}>
           <span>Max number of running app :</span>

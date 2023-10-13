@@ -46,7 +46,7 @@ export default function AppsStore() {
   }, []);
 
   return (
-    <AppsBase title="AppsStore">
+    <AppsBase title="Apps Store" icon="ph:plus-square">
       {isDataLoading && <Loader />}
       {error && <BannerAlert status="danger">{error}</BannerAlert>}
 
