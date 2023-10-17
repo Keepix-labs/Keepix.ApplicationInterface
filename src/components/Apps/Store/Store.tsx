@@ -6,6 +6,7 @@ import Btn from "@/components/Btn/Btn";
 import { getErrorMsg, safeFetch } from "@/lib/utils";
 import BannerAlert from "@/components/BannerAlert/BannerAlert";
 import { useAPIContext } from "@/context/api/APIProvider";
+import { Icon } from '@iconify-icon/react';
 
 type Data = {
   id: string;
@@ -46,35 +47,37 @@ export default function AppsStore() {
   }, []);
 
   return (
-    <AppsBase title="Apps Store" icon="ph:plus-square">
+    <AppsBase title="Apps Store" subTitle="Add a new app on your Keepix" icon="ph:plus-square">
       {isDataLoading && <Loader />}
       {error && <BannerAlert status="danger">{error}</BannerAlert>}
 
       {data && (
-        <div className={styles.main}>
+        <>
           {data.length !== 0 && (
-            <ul className={styles.list}>
+            <ul className="grid">
               {data.map((app, key) => (
-                <li className={styles.item} key={key}>
-                  <div className={styles.itemIcon}>
-                    {/* <Icon name="web_asset" /> */}
-                  </div>
-                  <div className={styles.itemContent}>
-                    <span className={styles.itemTitle}>{app.title}</span>
-                    <span className={styles.itemInstall}>
-                      {app.installed ? "Installed" : "Not installed"}
-                    </span>
-                  </div>
-                  {!app.installed && (
-                    <div className={styles.itemFooter}>
-                      <Btn href={`/apps/${app.id}/setup`}>Install</Btn>
+                <li key={key} className={styles.item} style={{ "--color": "64 173 230" }}>
+                  <div className={`${styles.itemCard} card`}>
+                    <div className={`${styles.itemIcon} icon-app`}>
+                      <Icon icon="cryptocurrency:eth" />
                     </div>
-                  )}
+                    <div className={styles.itemContent}>
+                      <h3 className={styles.itemTitle}>{app.title}</h3>
+                      <span className={styles.itemInstall}>
+                        {app.installed ? (<span>Installed</span>) : "Not installed"}
+                      </span>
+                    </div>
+                    {!app.installed && (
+                      <div className={styles.itemFooter}>
+                        <Btn href={`/apps/${app.id}/setup`} icon="ph:download">Install</Btn>
+                      </div>
+                    )}
+                  </div>
                 </li>
               ))}
             </ul>
           )}
-        </div>
+        </>
       )}
     </AppsBase>
   );

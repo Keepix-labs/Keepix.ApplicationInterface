@@ -5,10 +5,13 @@
 	/* Transition */
 	--cubic: cubic-bezier(.305, .045, .355, 1);
 	--transition-link: .3s;
+	--transition-input: .2s;
+	--transition-card: .6s;
 
 	/* Background */
 	--opacity-primary: 4%;
 	--opacity-secondary: 2%;
+	--opacity-tertiary: 10%;
 
 	--bg-body-rgb: 16 16 16;
 	--bg-body: rgb(var(--bg-body-rgb));
@@ -35,7 +38,7 @@
 
 	/* Marge */
 	--marge-primary: calc(20px + 7 * (100vw - 320px) / 1080);
-	--marge-secondary: calc(30px + 30 * (100vw - 320px) / 1080);
+	--marge-secondary: calc(30px + 35 * (100vw - 320px) / 1080);
 
 	/* Border */
 	--radius-primary: calc(15px + 5 * (100vw - 320px) / 1080);

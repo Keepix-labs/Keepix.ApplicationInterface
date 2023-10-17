@@ -5,3 +5,9 @@
   border-radius: var(--radius-primary);
   box-shadow: var(--shadow-light), var(--shadow-primary);
 }
+
+@mixin style-card {
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-primary);
+  padding: var(--padding);
+}

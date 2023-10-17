@@ -1,10 +1,14 @@
 .main {
-  --gap: calc(var(--marge-secondary) / 2);
+  --gap: calc(var(--marge-secondary) / 1.5);
 	--opacity-primary: 10%;
 	--opacity-secondary: 5%;
-  padding: calc(var(--marge-primary) + var(--marge-secondary));
-  padding-left: calc(var(--sidebar-width) + var(--marge-secondary));
+  --gutter: var(--marge-secondary);
+  padding: calc(var(--marge-primary) + var(--gutter));
+  padding-left: calc(var(--sidebar-width) + var(--gutter));
   background-color: var(--bg-primary);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
 
   &::before {
     content: '';
@@ -26,7 +30,6 @@
   display: flex;
   align-items: center;
   gap: calc(var(--title) / 1.5);
-  margin-bottom: var(--gap);
 
   &Icon {
     width: var(--icon);

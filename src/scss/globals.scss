@@ -1,3 +1,6 @@
+@import './mixins/styles';
+@import './mixins/medias';
+
 html {
   background: var(--bg-primary);
   color: var(--txt-primary);
@@ -14,5 +17,55 @@ html {
 
   &::-webkit-scrollbar {
     display: none;
+  }
+}
+
+/* Title */
+
+.h2 {
+  font-family: var(--font-family-heading);
+  font-weight: 600;
+  font-size: calc(20px + 5 * (100vw - 320px) / 1080);
+}
+/* Grid */
+
+[class*="grid"] {
+  --grid-layout-gap: calc(10px + 8 * (100vw - 320px) / 1080);
+  --grid-column-count: 5;
+  --grid-item-min-width: calc(200px + 60 * (100vw - 320px) / 1080);
+  --gap-count: calc(var(--grid-column-count) - 1);
+  --total-gap-width: calc(var(--gap-count) * var(--grid-layout-gap));
+  --grid-item-max-width: calc((100% - var(--total-gap-width)) / var(--grid-column-count));
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(max(var(--grid-item-min-width), var(--grid-item-max-width)), 1fr));
+  grid-template-rows: auto auto;
+  grid-gap: var(--grid-layout-gap);
+  overflow: hidden;
+}
+
+/* Card */
+
+.card {
+  @include style-card;
+  --padding: calc(var(--marge-secondary) / 1.25);
+}
+
+/* Icon */
+
+.icon-app {
+  --size: 4em;
+
+  width: var(--size);
+  height: var(--size);
+  background-color: rgba(var(--color, var(--bg-secondary-rgb)) / var(--opacity-primary));
+  border-radius: calc(var(--size) / 4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(var(--color, var(--bg-secondary-rgb)));
+
+  & > * {
+    font-size: calc(var(--size) / 1.5);
   }
 }
