@@ -5,14 +5,17 @@ import styles from "./styles.module.scss";
 import { ReactNode } from "react";
 import { Icon } from '@iconify-icon/react';
 
+type Status = "info" | "success" | "warning" | "danger"
+
 type PropsBtn = {
   href?: string;
   icon?: string;
+  status?: Status;
   onClick?: () => void;
   children: ReactNode;
 }
 
-export default function Btn({ href, icon, children, onClick }: PropsBtn) {
+export default function Btn({ href, icon, children, status, onClick }: PropsBtn) {
 
   const Content = (
     <>
@@ -23,7 +26,7 @@ export default function Btn({ href, icon, children, onClick }: PropsBtn) {
 
   if (onClick) {
     return (
-      <button onClick={onClick} className={styles.btn}>
+      <button onClick={onClick} className={styles.btn} data-status={status}>
         {Content}
       </button>
     )
@@ -34,7 +37,7 @@ export default function Btn({ href, icon, children, onClick }: PropsBtn) {
   }
 
   return (
-    <Link href={href} className={styles.btn}>
+    <Link href={href} className={styles.btn} data-status={status}>
       {Content}
     </Link>
   )

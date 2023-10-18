@@ -1,14 +1,15 @@
 "use client";
 
+import BannerAlert from "@/components/BannerAlert/BannerAlert";
+import Btn from "@/components/Btn/Btn";
+import { Form, Input } from '@/components/Form/Form';
+import Loader from "@/components/Loader/Loader";
+import { useAPIContext } from "@/context/api/APIProvider";
+import { getErrorMsg, safeFetch } from "@/lib/utils";
 import { useParams } from "next/navigation";
+import { ChangeEvent, useEffect, useState } from "react";
 import AppsBase from "../../AppsBase";
 import styles from "./styles.module.scss";
-import { ChangeEvent, useEffect, useState } from "react";
-import Loader from "@/components/Loader/Loader";
-import Btn from "@/components/Btn/Btn";
-import { getErrorMsg, safeFetch } from "@/lib/utils";
-import BannerAlert from "@/components/BannerAlert/BannerAlert";
-import { useAPIContext } from "@/context/api/APIProvider";
 
 type LoanInfo = {
   value: string;
@@ -86,50 +87,54 @@ export default function AppETHProofOfStakeSetup() {
   }, []);
 
   return (
-    <AppsBase
-      title={"ETHProofOfStake Setup"}
-      footer={
-        currentLoanInfos && (
-          <Btn
-            href={`/apps/${params["app-slug"]}/amount?amount=${inputOptions[currentInputOptionIndex]}`}
-          >
-            Confirm
-          </Btn>
-        )
-      }
-    >
+    <AppsBase title="ETHProofOfStake" subTitle="1/2 • Setup your app" icon="cryptocurrency:eth" color="64 173 230">
+
       {isDataLoading && <Loader />}
       {error && <BannerAlert status="danger">{error}</BannerAlert>}
 
       {data && (
-        <div className={styles.main}>
-          <div className={styles.title}>{data.title}</div>
-          <div className={styles.ethToStake}>
-            {inputOptions[currentInputOptionIndex]} ETH
-          </div>
-          <input
-            type="range"
-            min={0}
-            max={2}
-            step={1}
-            value={currentInputOptionIndex}
-            className={styles.input}
-            onChange={onChange}
-          />
+        <Form>
+          <h2 className="h2">{data.title}</h2>
+
+          <Input label="Select an ETH amount" name="ethAmount" icon="cryptocurrency:eth" required={true}>
+            <strong>{inputOptions[currentInputOptionIndex]} ETH</strong>
+            <input
+              type="range"
+              min={0}
+              max={2}
+              step={1}
+              value={currentInputOptionIndex}
+              className={styles.input}
+              onChange={onChange}
+            />
+          </Input>
+
           {currentLoanInfos && (
-            <div className={styles.infos}>
-              <div className={styles.info}>
-                Loan : {currentLoanInfos?.loan} ETH
+            <>
+              <div className="table">
+                <table>
+                  <tr>
+                    <td>Loan</td>
+                    <td><strong>{currentLoanInfos?.loan} ETH</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Cost of loan</td>
+                    <td><strong>{currentLoanInfos?.costOfLoan} ETH</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Reward commissions</td>
+                    <td><strong>{currentLoanInfos?.rewardCommissions} ETH</strong></td>
+                  </tr>
+                </table>
               </div>
-              <div className={styles.info}>
-                Cost of loan : {currentLoanInfos?.costOfLoan} ETH
+              <div className="btn-group">
+                <Btn href={`/apps/${params["app-slug"]}/amount?amount=${inputOptions[currentInputOptionIndex]}`} icon="ph:check-circle" status="success">
+                  Confirm
+                </Btn>
               </div>
-              <div className={styles.info}>
-                Reward commissions : {currentLoanInfos?.rewardCommissions} ETH
-              </div>
-            </div>
+            </>
           )}
-        </div>
+        </Form>
       )}
     </AppsBase>
   );

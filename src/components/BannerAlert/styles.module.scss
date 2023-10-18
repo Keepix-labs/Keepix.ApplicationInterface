@@ -16,17 +16,4 @@
   span {
     font-size: .9em;
   }
-
-  &[data-status=info] {
-    --color: var(--info-rgb);
-  }
-  &[data-status=success] {
-    --color: var(--success-rgb);
-  }
-  &[data-status=warning] {
-    --color: var(--warning-rgb);
-  }
-  &[data-status=danger] {
-    --color: var(--danger-rgb);
-  }
 }

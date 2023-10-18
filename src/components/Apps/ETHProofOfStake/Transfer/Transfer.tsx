@@ -52,26 +52,26 @@ export default function AppETHProofOfStakeTransfer() {
   }, []);
 
   return (
-    <AppsBase
-      title={"ETHProofOfStake Transfer"}
-      footer={
-        data &&
-        data.state === "DONE" && (
-          <Btn href={`/apps/${params["app-slug"]}/install`}>Continue</Btn>
-        )
-      }
-    >
+    <AppsBase title="ETHProofOfStake" subTitle="Transfer..." icon="cryptocurrency:eth" color="64 173 230">
+
       {isDataLoading && <Loader />}
       {error && <BannerAlert status="danger">{error}</BannerAlert>}
 
       {data && (
-        <div className={styles.main}>
-          <div className={styles.state}>
-            {data.state === "IN_PROGRESS"
-              ? "Checking deposit in progress..."
-              : "Deposit successful"}
+        <>
+          <div className="card card-default">
+            <div className={styles.state}>
+              {data.state === "IN_PROGRESS"
+                ? "Checking deposit in progress..."
+                : "Deposit successful"}
+            </div>
           </div>
-        </div>
+          {data.state === "DONE" && (
+            <div className="btn-group">
+              <Btn href={`/apps/${params["app-slug"]}/install`} status="success" icon="ph:arrow-right">Continue</Btn>
+            </div>
+          )}
+        </>
       )}
     </AppsBase>
   );

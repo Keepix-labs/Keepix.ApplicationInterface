@@ -34,12 +34,9 @@
   &Icon {
     width: var(--icon);
     height: var(--icon);
-    background-color: var(--bg-secondary);
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(var(--color) / var(--opacity-secondary));
-    color: rgb(var(--color));
     box-shadow: var(--shadow-light);
     border-radius: calc(var(--icon) / 4);
 
@@ -58,4 +55,10 @@
     font-size: .95em;
     color: var(--txt-secondary);
   }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--marge-grid);
 }

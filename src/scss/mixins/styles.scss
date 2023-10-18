@@ -11,3 +11,14 @@
   border-radius: var(--radius-primary);
   padding: var(--padding);
 }
+
+@mixin style-cursor-range {
+  appearance: none;
+  -webkit-appearance: none;
+  width: var(--cursor);
+  height: var(--cursor);
+  border-radius: 50%;
+  background-color: var(--txt-primary);
+  cursor: pointer;
+  box-sizing: border-box;
+}

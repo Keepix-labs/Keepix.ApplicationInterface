@@ -31,36 +31,64 @@
 .input {
   --bg: var(--bg-secondary);
   --color: var(--txt-primary);
+  --height: 3.5em;
+  --gap: 1.25em;
   font-size: 1.1em;
+  min-height: var(--height);
   border-radius: .65em;
   background-color: var(--bg);
   color: var(--color);
   display: flex;
-  align-items: stretch;
+  align-items: center;
+  gap: var(--gap);
+  padding: 0 var(--gap);
+  pointer-events: none;
   
   input, select, textarea {
     flex: 1;
     color: currentColor;
     border: 0;
     width: 100%;
-    padding: 1.2em 1.45em 1.25em;
+    height: 100%;
     background-color: transparent;
     font-family: var(--font-family-main);
+    pointer-events: auto;
+    padding: 1.2em 0 1.25em;
     
     & + iconify-icon {
       right: 0;
       left: auto;
     }
+
+    &[type=range] {
+      appearance: none;
+      -webkit-appearance: none;
+      --cursor: 20px;
+      background-color: var(--bg-secondary);
+      height: 10px;
+      padding: 0;
+      border-radius: 50px;
+
+      &::-webkit-slider-thumb {
+        @include style-cursor-range;
+      }
+
+      &::-moz-range-thumb {
+        @include style-cursor-range;
+      }
+
+      &::-ms-thumb {
+        @include style-cursor-range;
+      }
+    }
   }
 
   iconify-icon {
-    position: absolute;
     height: 100%;
-    width: 3.5em;
-    padding: 0 1.2em;
     pointer-events: none;
     display: flex;
     align-items: center;
+    transform: scale(1.15);
 
     &.show {
       pointer-events: auto;
@@ -75,10 +103,6 @@
 
     &:first-child {
       left: .1em;
-    }
-
-    & + input {
-      padding-left: 3.5em;
     }
   }
 

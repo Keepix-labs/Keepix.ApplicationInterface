@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "@iconify/react": "^4.1.1",
+    "chart.js": "^4.4.0",
     "next": "latest",
     "next-intl": "^2.20.2",
     "react": "latest",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "latest"
   },
   "devDependencies": {

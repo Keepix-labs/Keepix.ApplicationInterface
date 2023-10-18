@@ -46,6 +46,8 @@ export default function AppsStore() {
     fetchData();
   }, []);
 
+  const style = { "--color": "64 173 230" } as React.CSSProperties
+
   return (
     <AppsBase title="Apps Store" subTitle="Add a new app on your Keepix" icon="ph:plus-square">
       {isDataLoading && <Loader />}
@@ -56,7 +58,7 @@ export default function AppsStore() {
           {data.length !== 0 && (
             <ul className="grid">
               {data.map((app, key) => (
-                <li key={key} className={styles.item} style={{ "--color": "64 173 230" }}>
+                <li key={key} className={styles.item} style={style}>
                   <div className={`${styles.itemCard} card`}>
                     <div className={`${styles.itemIcon} icon-app`}>
                       <Icon icon="cryptocurrency:eth" />

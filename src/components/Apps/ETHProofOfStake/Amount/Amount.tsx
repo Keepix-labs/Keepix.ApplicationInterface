@@ -89,28 +89,37 @@ export default function AppETHProofOfStakeAmount() {
     fetchData();
   }, []);
 
-  return (
-    <AppsBase
-      title={"ETHProofOfStake Setup"}
-      footer={
-        secretKeyDownloaded && (
-          <Btn href={`/apps/${params["app-slug"]}/transfer`}>Continue</Btn>
-        )
-      }
-    >
+  return (    
+    <AppsBase title="ETHProofOfStake" subTitle="2/2 • Setup your app" icon="cryptocurrency:eth" color="64 173 230">
+
       {isDataLoading && <Loader />}
       {error && <BannerAlert status="danger">{error}</BannerAlert>}
 
       {data && (
-        <div className={styles.main}>
-          <div className={styles.title}>{data.title}</div>
-          <div className={styles.cost}>
-            Cost : {data.amount} {data.currency}
+        <>
+          <div className="card card-default">
+            <h2 className="h2">{data.title}</h2>
+            <div className="table">
+              <table>
+                <tr>
+                  <td>Cost</td>
+                  <td><strong>{data.amount} {data.currency}</strong></td>
+                </tr>
+                <tr>
+                  <td>Address</td>
+                  <td><strong>{data.address}</strong></td>
+                </tr>
+              </table>
+            </div>
+            <div className="btn-group">
+              <Btn onClick={fetchWalletSecret} icon="ph:key">Get Wallet Secret</Btn>
+              {secretKeyDownloaded && (
+                <Btn href={`/apps/${params["app-slug"]}/transfer`} icon="ph:arrow-right" status="success">Continue</Btn>
+              )}
+            </div>
           </div>
-          <div className={styles.address}>Address : {data.address}</div>
-          <Btn onClick={fetchWalletSecret}>Get Wallet Secret</Btn>
           <FAQ />
-        </div>
+        </>
       )}
     </AppsBase>
   );

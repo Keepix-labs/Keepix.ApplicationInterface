@@ -1,10 +1,9 @@
 .btn {
-  --bg: var(--bg-secondary);
-  --color: var(--txt-primary);
+  --opacity: var(--opacity-secondary);
   transition: background-color var(--transition-link), color var(--transition-link), transform .15s;
   font-weight: 700;
-  background: var(--bg);
-  color: var(--color);
+  background: rgba(var(--color, var(--bg-secondary-rgb)) / var(--opacity));
+  color: rgb(var(--color, var(--bg-secondary-rgb)));
   padding: 1em 2em 1.1em;
   border-radius: 100px;
   display: inline-flex;
@@ -16,7 +15,7 @@
   user-select: none;
 
   &:hover {
-    --bg: rgba(var(--bg-secondary-rgb) / var(--opacity-tertiary));
+    --opacity: var(--opacity-tertiary);
   }
 
   &:active {

@@ -39,6 +39,7 @@
 	/* Marge */
 	--marge-primary: calc(20px + 7 * (100vw - 320px) / 1080);
 	--marge-secondary: calc(30px + 35 * (100vw - 320px) / 1080);
+	--marge-grid: calc(15px + 7 * (100vw - 320px) / 1080);
 
 	/* Border */
 	--radius-primary: calc(15px + 5 * (100vw - 320px) / 1080);
