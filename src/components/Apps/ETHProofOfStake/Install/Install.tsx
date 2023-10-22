@@ -4,11 +4,12 @@ import { useParams } from "next/navigation";
 import AppsBase from "../../AppsBase";
 import { useEffect, useState } from "react";
 import Loader from "@/components/Loader/Loader";
-import styles from "./styles.module.scss";
+import "./styles.scss";
 import Btn from "@/components/Btn/Btn";
 import { getErrorMsg, safeFetch } from "@/lib/utils";
 import BannerAlert from "@/components/BannerAlert/BannerAlert";
 import { useAPIContext } from "@/context/api/APIProvider";
+import Progress from '@/components/Progress/Progress';
 
 type Data = {
   title: string;
@@ -83,32 +84,29 @@ export default function AppETHProofOfStakeInstall() {
     fetchInstallState();
   }, [data]);
 
-  return (
-    <AppsBase
-      title={"ETHProofOfStake Install"}
-      footer={
-        dataInstallState &&
-        dataInstallState.percentage === 100 && (
-          <Btn href={`/apps/${params["app-slug"]}`}>Dashboard</Btn>
-        )
-      }
-    >
-      {isDataLoading && <Loader />}
+  return (    
+    <AppsBase title="ETHProofOfStake" subTitle="Installation..." icon="cryptocurrency:eth" color="64 173 230">
+
+      {/* {isDataLoading && <Loader />} */}
       {error && <BannerAlert status="danger">{error}</BannerAlert>}
 
-      {data && (
-        <div className={styles.main}>
-          <div className={styles.title}>{data.title}</div>
-          {dataInstallState && dataInstallState.percentage !== 100 && (
-            <div className={styles.installState}>
-              Installation in progress : {dataInstallState.percentage}%
-            </div>
-          )}
-          {dataInstallState && dataInstallState.percentage === 100 && (
-            <div className={styles.installState}>Installation done !</div>
-          )}
-        </div>
-      )}
+      <div className="install card card-default">
+        {data && (
+          <>
+            {dataInstallState && (
+              <>
+                <h2 className="h2">
+                  {dataInstallState.percentage === 100 ? "Installation done !" : "Installation in progress..."}
+                </h2>
+                <Progress percent={dataInstallState.percentage} />
+                {dataInstallState.percentage === 100 && (
+                  <Btn href={`/apps/${params["app-slug"]}`} icon="ph:arrow-right" status="success">Dashboard</Btn>
+                )}
+              </>
+            )}
+          </>
+        )}
+      </div>
     </AppsBase>
   );
 }

@@ -4,11 +4,13 @@ import { useParams } from "next/navigation";
 import AppsBase from "../../AppsBase";
 import { useEffect, useState } from "react";
 import Loader from "@/components/Loader/Loader";
-import styles from "./styles.module.scss";
+import "./styles.scss";
 import Btn from "@/components/Btn/Btn";
 import { getErrorMsg, safeFetch } from "@/lib/utils";
 import BannerAlert from "@/components/BannerAlert/BannerAlert";
 import { useAPIContext } from "@/context/api/APIProvider";
+import Logo from '@/components/Logo/Logo';
+import { Icon } from '@iconify-icon/react';
 
 type Data = {
   state: "IN_PROGRESS" | "DONE";
@@ -54,23 +56,36 @@ export default function AppETHProofOfStakeTransfer() {
   return (
     <AppsBase title="ETHProofOfStake" subTitle="Transfer..." icon="cryptocurrency:eth" color="64 173 230">
 
-      {isDataLoading && <Loader />}
+      {/* {isDataLoading && <Loader />} */}
       {error && <BannerAlert status="danger">{error}</BannerAlert>}
 
       {data && (
         <>
-          <div className="card card-default">
-            <div className={styles.state}>
-              {data.state === "IN_PROGRESS"
-                ? "Checking deposit in progress..."
-                : "Deposit successful"}
+          <div className={`transfer card card-default ${data.state}`}>
+            <div className="state">
+              <div className="state-logo">
+                <Logo text={false} />
+              </div>
+              <div className="state-title">
+                {data.state === "IN_PROGRESS" ? (
+                  <>
+                    <span>Checking deposit</span>
+                    <strong>in progress <Icon icon="svg-spinners:3-dots-scale" /></strong>
+                  </>
+                ) : (
+                  <>
+                    <span>Deposit</span>
+                    <strong>Successful</strong>
+                  </>
+                )}
+              </div>
+              {data.state === "DONE" && (
+                <div className="btn-group">
+                  <Btn href={`/apps/${params["app-slug"]}/install`} status="success" icon="ph:arrow-right">Continue</Btn>
+                </div>
+              )}
             </div>
           </div>
-          {data.state === "DONE" && (
-            <div className="btn-group">
-              <Btn href={`/apps/${params["app-slug"]}/install`} status="success" icon="ph:arrow-right">Continue</Btn>
-            </div>
-          )}
         </>
       )}
     </AppsBase>

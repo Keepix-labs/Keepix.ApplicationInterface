@@ -2,7 +2,11 @@
 
 import styles from "./styles.module.scss"
 
-const Logo = () => {
+type Props = {
+  text?: Boolean
+}
+
+const Logo = ({ text = true }: Props) => {
   const y = 90.5
   const x = 156.5
 
@@ -29,12 +33,15 @@ const Logo = () => {
             xlinkHref={cube.secondary ? `#cube-b-secondary` : `#cube-b`}
             className={`cube-${index}`}
             y={cube.y * y}
-            x={cube.x * x} />
+            x={cube.x * x}
+            style={{animationDelay: `.${index}s`}} />
         ))}
       </svg>
-      <svg className={styles.logoTxt} viewBox="0 0 431.8 114.9">
-        <use xlinkHref="#logo-txt" />
-      </svg>
+      {text && (
+        <svg className={styles.logoTxt} viewBox="0 0 431.8 114.9">
+          <use xlinkHref="#logo-txt" />
+        </svg>
+      )}
     </div>
   )
 }

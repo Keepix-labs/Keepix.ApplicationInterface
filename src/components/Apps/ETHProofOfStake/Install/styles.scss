@@ -1,0 +1,9 @@
+.install {
+  --padding: calc(50px + 20 * (100vw - 320px) / 1080);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: calc(var(--padding) / 2);
+}
