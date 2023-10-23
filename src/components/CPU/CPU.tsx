@@ -126,7 +126,7 @@ export default function CPU() {
       ...measure,
       value: getRandomValue(measure.max, measure.fixed),
     }))
-    setMeasures(updatedMeasures)
+    setMeasures(updatedMeasures as any)
   }
   
   useEffect(() => {
