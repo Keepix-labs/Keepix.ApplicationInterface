@@ -1,6 +1,6 @@
 import Settings from "@/components/Settings/Settings";
 
-export default function MonitorView() {
+export default function SettingsView() {
   return (
     <>
       <Settings />

@@ -16,21 +16,30 @@ type Action = {
 
 const actions: Action[] = [
   {
-    icon: "ph:plus-circle",
-    name: "Add Keepix",
-    link: "https://keepix.io/setup",
-    target: "_blank",
+    icon: "ph:plus-square",
+    name: "Add Plugins",
+    link: "/apps/add",
+    target: "",
   },
+  {
+    icon: "ph:wallet",
+    name: "Wallets",
+    link: "/wallets",
+    target: "",
+  },
+  {
+    icon: "ph:terminal",
+    name: "Terminal",
+    link: "/terminal",
+    target: "",
+  },
+];
+
+const actions_secondary: Action[] = [
   {
     icon: "ph:activity",
     name: "System monitor",
     link: "/monitor",
-    target: "",
-  },
-  {
-    icon: "ph:plus-square",
-    name: "Add Apps",
-    link: "/apps/add",
     target: "",
   },
   {
@@ -41,10 +50,11 @@ const actions: Action[] = [
   },
 ];
 
+
 export default function Sidebar() {
   const pathName = usePathname();
 
-  return (
+  return (<div>
     <aside className={styles.sidebar}>
       <Link href={"/"} className={styles.sidebarLogo}>
         <Logo />
@@ -53,7 +63,7 @@ export default function Sidebar() {
       <div className={styles.sidebarContent}>
         <SidebarApps />
       </div>
-      <nav className={styles.nav}>
+      <nav className={styles.nav} style={{marginBottom:"10px"}}>
         <ul>
           {actions.map((action, key) => (
             <li
@@ -72,6 +82,27 @@ export default function Sidebar() {
           ))}
         </ul>
       </nav>
+
+      <nav className={styles.nav}>
+        <ul>
+          {actions_secondary.map((action, key) => (
+            <li
+              data-active={pathName === action.link}
+              key={key}
+            >
+              <Link
+                href={action.link}
+                target={action.target}
+                className={styles.link}
+              >
+                <Icon icon={action.icon} />
+                <span>{action.name}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </aside>
+    </div>
   );
 }

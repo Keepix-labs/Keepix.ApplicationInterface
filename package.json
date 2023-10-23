@@ -15,7 +15,8 @@
     "next-intl": "^2.20.2",
     "react": "latest",
     "react-chartjs-2": "^5.2.0",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "react-iframe": "^1.8.5"
   },
   "devDependencies": {
     "@iconify-icon/react": "^1.0.8",
