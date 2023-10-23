@@ -86,7 +86,6 @@ export default function AppETHProofOfStakeInstall() {
 
   return (    
     <AppsBase title="ETHProofOfStake" subTitle="Installation..." icon="cryptocurrency:eth" color="64 173 230">
-
       {/* {isDataLoading && <Loader />} */}
       {error && <BannerAlert status="danger">{error}</BannerAlert>}
 

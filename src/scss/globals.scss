@@ -66,6 +66,33 @@ html {
   overflow: hidden;
 }
 
+/* Main */
+
+.main {
+  --gap: calc(var(--marge-secondary) / 1.5);
+	--opacity-primary: 10%;
+	--opacity-secondary: 5%;
+  --gutter: var(--marge-secondary);
+  padding: calc(var(--marge-primary) + var(--gutter));
+  padding-left: calc(var(--sidebar-width) + var(--gutter));
+  background-color: var(--bg-primary);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+
+  &::before {
+    content: '';
+    inset: var(--marge-primary);
+    left: var(--sidebar-width);
+    position: fixed;
+    border-radius: var(--radius-primary);
+    z-index: 100;
+    box-shadow: 0 0 0 var(--sidebar-width) var(--bg-body);
+    pointer-events: none;
+    user-select: none;
+  }
+}
+
 /* Card */
 
 .card {

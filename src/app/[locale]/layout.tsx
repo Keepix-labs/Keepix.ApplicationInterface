@@ -7,6 +7,8 @@ import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import APIProvider from "@/context/api/APIProvider";
 import Sprites from '@/components/Sprites/Sprites';
+import Sidebar from "@/components/Sidebar/Sidebar";
+import CPU from '@/components/CPU/CPU';
 
 type Props = {
   children: React.ReactNode;
@@ -49,9 +51,13 @@ export default async function RootLayout({
     <html lang={locale}>
       <body className={satoshi.className + ' ' + clashdisplay.variable}>
         <APIProvider>
-          <NextIntlClientProvider locale={locale} messages={messages}>
-            {children}
-          </NextIntlClientProvider>
+          <Sidebar />
+          <main className="main">
+            <CPU />
+            <NextIntlClientProvider locale={locale} messages={messages}>
+              {children}
+            </NextIntlClientProvider>
+          </main>
         </APIProvider>
         <Sprites />
       </body>

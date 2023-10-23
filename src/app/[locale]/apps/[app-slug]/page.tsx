@@ -1,8 +1,6 @@
 "use client";
 
 import ETHProofOfStakeDashboard from "@/components/Apps/ETHProofOfStake/Dashboard/Dashboard";
-import styles from "./page.module.scss";
-import Sidebar from "@/components/Sidebar/Sidebar";
 import { useParams } from "next/navigation";
 
 export default function AppsSlugView() {
@@ -16,7 +14,6 @@ export default function AppsSlugView() {
 
   return (
     <>
-      <Sidebar />
       {params["app-slug"] && apps[params["app-slug"] as string]()}
     </>
   );

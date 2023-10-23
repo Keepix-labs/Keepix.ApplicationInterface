@@ -1,0 +1,156 @@
+.cpu {
+  --color-1: #3cf05a;
+  --color-2: #c4f533;
+  --color-3: #ff7424;
+  --color-4: #ff2450;
+  --padding: calc(var(--marge-secondary) / 3);
+  --transition: 1s var(--cubic);
+  display: flex;
+  align-items: stretch;
+  gap: var(--padding);
+  margin: calc(var(--marge-secondary) * -1);
+  background: linear-gradient(to bottom, rgba(var(--bg-primary-rgb) / 80%), rgba(var(--bg-secondary-rgb) / 25%));
+  margin-bottom: 0;
+  padding: var(--padding);
+  position: sticky;
+  top: var(--marge-primary);
+  border-radius: var(--radius-primary);
+  z-index: 50;
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-light), var(--shadow-primary);
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-color: var(--bg-primary);
+    opacity: .8;
+  }
+
+  &Item {
+    --gutter: calc(var(--padding) / 1.5);
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    background-color: var(--bg-secondary);
+    flex: 1;
+    border-radius: calc(var(--radius-primary) / 1.5);
+  }
+
+  &Right {
+    text-align: right;
+    display: flex;
+    align-items: center;
+    gap: calc(var(--gutter) / 1.25);
+    color: var(--txt-secondary);
+    line-height: 1;
+    flex: 1;
+    padding: var(--gutter);
+
+    small {
+      font-size: .65em;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      display: block;
+      margin-right: auto;
+    }
+
+    span {
+      font-family: var(--font-family-heading);
+      font-weight: 600;
+    }
+
+    strong {
+      font-weight: 600;
+      font-size: 120%;
+      color: var(--txt-primary);
+    }
+
+    &Svg {
+      font-size: 1.75em;
+      color: var(--txt-secondary);
+    }
+  }
+}
+
+.jauge {
+  --size: calc(55px + 5 * (100vw - 320px) / 1080);
+  padding: calc(var(--padding) / 1.5);
+  background: linear-gradient(to right, rgba(var(--bg-secondary-rgb) / 0%), rgba(var(--bg-secondary-rgb) / 5%));
+  border-radius: calc(var(--radius-primary) / 1.5);
+
+  &::before {
+    transition: background-position var(--transition);
+    content: '';
+    inset: 25%;
+    position: absolute;
+    background: linear-gradient(to right, var(--color-1), var(--color-2), var(--color-3), var(--color-4));
+    background-size: 400% 100%;
+    background-position: calc(var(--percent) * 1) 0;
+    border-radius: 50%;
+    filter: blur(25px);
+    opacity: .3;
+  }
+
+  &::after {
+    transition: background-position var(--transition);
+    --mask: linear-gradient(to right, transparent, #000, transparent);
+    content: '';
+    inset: auto 10% 0;
+    position: absolute;
+    background: linear-gradient(to right, var(--color-1), var(--color-2), var(--color-3), var(--color-4));
+    background-size: 400% 100%;
+    background-position: calc(var(--percent) * 1) 0;
+    height: 1px;
+    mask: var(--mask);
+    -webkit-mask: var(--mask);
+    opacity: .5;
+  }
+
+  &Svg {
+    font-size: .9em;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    overflow: visible;
+    fill: none;
+    stroke-width: 1em;
+    width: var(--size);
+    top: -2px;
+  }
+
+  &Back {
+    stroke-width: .5em;
+    stroke: var(--bg-secondary);
+  }
+
+  &Gradient {
+    transition: stroke-dasharray var(--transition);
+  }
+
+  &Txt {
+    transition: background-position var(--transition);
+    font-size: calc(var(--size) / 5);
+    background: linear-gradient(to right, var(--color-1), var(--color-2), var(--color-3), var(--color-4));
+    background-size: 400% 100%;
+    background-position: calc(var(--percent) * 1) 0;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: block;
+    position: absolute;
+    bottom: 18px;
+    font-family: var(--font-family-heading);
+    width: 100%;
+    text-align: center;
+    left: 0;
+  }
+}
+
+.stop {
+  @for $i from 1 through 4 {
+    &#{$i} {
+      stop-color: var(--color-#{$i});
+    }
+  }
+}

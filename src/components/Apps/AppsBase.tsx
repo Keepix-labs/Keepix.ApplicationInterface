@@ -17,7 +17,7 @@ export default function AppsBase({ title, subTitle, icon = 'ph:house-simple', co
   const style = { "--color": color } as React.CSSProperties
 
   return (
-    <main className={styles.main}>
+    <>
       <header className={styles.header} style={style}>
         <div className={`${styles.headerIcon} icon-app`}>
           <Icon icon={icon} />
@@ -32,6 +32,6 @@ export default function AppsBase({ title, subTitle, icon = 'ph:house-simple', co
       <div className={styles.content}>
         {children}
       </div>
-    </main>
+    </>
   );
 }
