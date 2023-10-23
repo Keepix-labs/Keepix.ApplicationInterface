@@ -11,6 +11,7 @@ import BannerAlert from "@/components/BannerAlert/BannerAlert";
 import { useAPIContext } from "@/context/api/APIProvider";
 import Logo from '@/components/Logo/Logo';
 import { Icon } from '@iconify-icon/react';
+import { KEEPIX_API_URL } from "@/constants";
 
 type Data = {
   state: "IN_PROGRESS" | "DONE";
@@ -24,7 +25,7 @@ export default function AppETHProofOfStakeTransfer() {
   const [isDataLoading, setDataLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchUrl = `${process.env.NEXT_PUBLIC_API_URL}/plugin/${params["app-slug"]}/deposit-state`;
+  const fetchUrl = `${KEEPIX_API_URL}/plugin/${params["app-slug"]}/deposit-state`;
 
   const fetchData = async () => {
     let response: Response;

@@ -10,6 +10,7 @@ import FAQ from "@/components/FAQ/FAQ";
 import { getErrorMsg, safeFetch } from "@/lib/utils";
 import BannerAlert from "@/components/BannerAlert/BannerAlert";
 import { useAPIContext } from "@/context/api/APIProvider";
+import { KEEPIX_API_URL } from '@/constants';
 
 type Data = {
   title: string;
@@ -34,8 +35,8 @@ export default function AppETHProofOfStakeAmount() {
     useState<boolean>(false);
 
   const amount = searchParams.get("amount") || "0";
-  const fetchUrl = `${process.env.NEXT_PUBLIC_API_URL}/plugin/${params["app-slug"]}/page/3?amount=${amount}`;
-  const fetchWalletSecretUrl = `${process.env.NEXT_PUBLIC_API_URL}/plugin/${params["app-slug"]}/wallet-secret`;
+  const fetchUrl = `${KEEPIX_API_URL}/plugin/${params["app-slug"]}/page/3?amount=${amount}`;
+  const fetchWalletSecretUrl = `${KEEPIX_API_URL}/plugin/${params["app-slug"]}/wallet-secret`;
 
   const fetchData = async () => {
     let response: Response;

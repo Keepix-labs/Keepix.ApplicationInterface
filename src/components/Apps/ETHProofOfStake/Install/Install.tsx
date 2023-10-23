@@ -10,6 +10,7 @@ import { getErrorMsg, safeFetch } from "@/lib/utils";
 import BannerAlert from "@/components/BannerAlert/BannerAlert";
 import { useAPIContext } from "@/context/api/APIProvider";
 import Progress from '@/components/Progress/Progress';
+import { KEEPIX_API_URL } from '@/constants';
 
 type Data = {
   title: string;
@@ -29,8 +30,8 @@ export default function AppETHProofOfStakeInstall() {
   const [isDataLoading, setDataLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchUrl = `${process.env.NEXT_PUBLIC_API_URL}/plugin/${params["app-slug"]}/page/5`;
-  const fetchInstallStateUrl = `${process.env.NEXT_PUBLIC_API_URL}/plugin/${params["app-slug"]}/install-state`;
+  const fetchUrl = `${KEEPIX_API_URL}/plugin/${params["app-slug"]}/page/5`;
+  const fetchInstallStateUrl = `${KEEPIX_API_URL}/plugin/${params["app-slug"]}/install-state`;
 
   const fetchData = async () => {
     let response: Response;

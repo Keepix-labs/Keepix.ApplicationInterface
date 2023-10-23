@@ -7,6 +7,7 @@ import Loader from "../Loader/Loader";
 import { getErrorMsg, safeFetch } from "@/lib/utils";
 import BannerAlert from "../BannerAlert/BannerAlert";
 import { useAPIContext } from "@/context/api/APIProvider";
+import { KEEPIX_API_URL } from "@/constants";
 
 type Data = {
   cpu: string;
@@ -17,7 +18,7 @@ type Data = {
   };
 };
 
-const fetchUrl = `${process.env.NEXT_PUBLIC_API_URL}/monitoring/keepix`;
+const fetchUrl = `${KEEPIX_API_URL}/monitoring/keepix`;
 
 export default function Monitor() {
   const { setAPIState } = useAPIContext();

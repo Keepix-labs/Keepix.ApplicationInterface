@@ -7,6 +7,7 @@ import { getErrorMsg, safeFetch } from "@/lib/utils";
 import BannerAlert from "@/components/BannerAlert/BannerAlert";
 import { useAPIContext } from "@/context/api/APIProvider";
 import { Icon } from '@iconify-icon/react';
+import { KEEPIX_API_URL } from "@/constants";
 
 type Data = {
   id: string;
@@ -15,7 +16,7 @@ type Data = {
   installed: boolean;
 }[];
 
-const fetchUrl = `${process.env.NEXT_PUBLIC_API_URL}/plugin/list`;
+const fetchUrl = `${KEEPIX_API_URL}/plugin/list`;
 
 export default function AppsStore() {
   const { setAPIState } = useAPIContext();

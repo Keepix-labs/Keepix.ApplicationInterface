@@ -8,6 +8,7 @@ import { useParams } from "next/navigation";
 import { getErrorMsg, safeFetch } from "@/lib/utils";
 import { useAPIContext } from "@/context/api/APIProvider";
 import BannerAlert from "../BannerAlert/BannerAlert";
+import { KEEPIX_API_URL } from "@/constants";
 
 type Data = {
   id: string;
@@ -16,7 +17,7 @@ type Data = {
   installed: boolean;
 }[];
 
-const fetchUrl = `${process.env.NEXT_PUBLIC_API_URL}/plugin/list`;
+const fetchUrl = `${KEEPIX_API_URL}/plugin/list`;
 
 export default function SidebarApps() {
   const params = useParams();

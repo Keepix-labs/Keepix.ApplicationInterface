@@ -10,6 +10,7 @@ import { useParams } from "next/navigation";
 import { ChangeEvent, useEffect, useState } from "react";
 import AppsBase from "../../AppsBase";
 import styles from "./styles.module.scss";
+import { KEEPIX_API_URL } from '@/constants';
 
 type LoanInfo = {
   value: string;
@@ -39,7 +40,7 @@ export default function AppETHProofOfStakeSetup() {
     null
   );
 
-  const fetchUrl = `${process.env.NEXT_PUBLIC_API_URL}/plugin/${params["app-slug"]}/page/1`;
+  const fetchUrl = `${KEEPIX_API_URL}/plugin/${params["app-slug"]}/page/1`;
   const inputOptions = [8, 16, 32];
 
   const onChange = (evt: ChangeEvent<HTMLInputElement>) => {
