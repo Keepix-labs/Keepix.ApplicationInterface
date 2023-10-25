@@ -14,8 +14,8 @@ export default function Terminal() {
   const updateIframeUrl = () => {
     const currentHost = window.location.hostname;
     const currentProtocol = window.location.protocol;
-    setIframeUrl(`${currentProtocol}//${currentHost}/ssh/host/${currentHost}?${Math.random()}`);
-    console.log(`${currentProtocol}//${currentHost}/ssh/host/${currentHost}?${Math.random()}`)
+    setIframeUrl(`${currentProtocol}//${currentHost}:9001/ssh/host/${currentHost}?${Math.random()}`);
+    console.log(`${currentProtocol}//${currentHost}:9001/ssh/host/${currentHost}?${Math.random()}`)
   };
 
   // Call the function to update the iframe URL when the component mounts (on the client-side)
