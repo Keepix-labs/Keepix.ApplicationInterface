@@ -6,7 +6,7 @@ import Btn from "@/components/Btn/Btn";
 import { getErrorMsg, safeFetch } from "@/lib/utils";
 import BannerAlert from "@/components/BannerAlert/BannerAlert";
 import { useAPIContext } from "@/context/api/APIProvider";
-import { Icon } from '@iconify-icon/react';
+import { Icon } from "@iconify-icon/react";
 import { KEEPIX_API_URL } from "@/constants";
 
 type Data = {
@@ -16,7 +16,7 @@ type Data = {
   installed: boolean;
 }[];
 
-const fetchUrl = `${KEEPIX_API_URL}/plugin/list`;
+const fetchUrl = `${KEEPIX_API_URL}/plugins/list`;
 
 export default function AppsStore() {
   const { setAPIState } = useAPIContext();
@@ -47,10 +47,14 @@ export default function AppsStore() {
     fetchData();
   }, []);
 
-  const style = { "--color": "64 173 230" } as React.CSSProperties
+  const style = { "--color": "64 173 230" } as React.CSSProperties;
 
   return (
-    <AppsBase title="Apps Store" subTitle="Add a new app on your Keepix" icon="ph:plus-square">
+    <AppsBase
+      title="Apps Store"
+      subTitle="Add a new app on your Keepix"
+      icon="ph:plus-square"
+    >
       {isDataLoading && <Loader />}
       {error && <BannerAlert status="danger">{error}</BannerAlert>}
 
@@ -67,12 +71,18 @@ export default function AppsStore() {
                     <div className={styles.itemContent}>
                       <h3 className={styles.itemTitle}>{app.title}</h3>
                       <span className={styles.itemInstall}>
-                        {app.installed ? (<span>Installed</span>) : "Not installed"}
+                        {app.installed ? (
+                          <span>Installed</span>
+                        ) : (
+                          "Not installed"
+                        )}
                       </span>
                     </div>
                     {!app.installed && (
                       <div className={styles.itemFooter}>
-                        <Btn href={`/apps/${app.id}/setup`} icon="ph:download">Install</Btn>
+                        <Btn href={`/apps/${app.id}/setup`} icon="ph:download">
+                          Install
+                        </Btn>
                       </div>
                     )}
                   </div>

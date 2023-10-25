@@ -37,11 +37,7 @@ export default function Monitor() {
 
       response = await safeFetch(fetchUrl, setAPIState);
       tempData = await response.json();
-      setData(data);
-
-      window.setTimeout(() => {
-        fetchData();
-      }, 1000);
+      setData(tempData);
     } catch (e) {
       setError(getErrorMsg(e));
     } finally {
@@ -50,7 +46,10 @@ export default function Monitor() {
   };
 
   useEffect(() => {
-    fetchData();
+    const fetchDataInterval = setInterval(() => {
+      fetchData();
+    }, 2000);
+    return () => clearInterval(fetchDataInterval);
   }, []);
 
   return (

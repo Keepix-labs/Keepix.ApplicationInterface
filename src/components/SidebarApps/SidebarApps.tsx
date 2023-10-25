@@ -17,7 +17,7 @@ type Data = {
   installed: boolean;
 }[];
 
-const fetchUrl = `${KEEPIX_API_URL}/plugin/list`;
+const fetchUrl = `${KEEPIX_API_URL}/plugins/list`;
 
 export default function SidebarApps() {
   const params = useParams();
@@ -52,12 +52,12 @@ export default function SidebarApps() {
   return (
     <div className={styles.main}>
       <div className={styles.title}>Apps</div>
-    
+
       {isDataLoading && <Loader />}
       {error && <BannerAlert status="danger">{error}</BannerAlert>}
 
       {!isDataLoading && !data.length && (
-       <BannerAlert status="info">No app installed yet.</BannerAlert>
+        <BannerAlert status="info">No app installed yet.</BannerAlert>
       )}
       {data.length !== 0 && (
         <ul className={styles.list}>
