@@ -1,9 +1,30 @@
-.main {
+.btn {
+  --opacity: var(--opacity-secondary);
+  transition: background-color var(--transition-link), color var(--transition-link), transform .15s;
+  font-weight: 700;
+  background: rgba(var(--color, var(--bg-secondary-rgb)) / var(--opacity));
+  color: rgb(var(--color, var(--bg-secondary-rgb)));
+  padding: 1em 2em 1.1em;
+  border-radius: 100px;
   display: inline-flex;
-  padding: 8px 16px;
-  background-color: var(--c-white);
-  color: var(--c-black);
-  border-radius: 8px;
-  margin: 8px 0;
-  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  text-align: center;
+  gap: .75em;
+  user-select: none;
+
+  &:hover {
+    --opacity: var(--opacity-tertiary);
+  }
+
+  &:active {
+    transform: scale(.95);
+  }
+
+  iconify-icon {
+    top: .1em;
+    margin-right: -.5em;
+    opacity: .5;
+  }
 }

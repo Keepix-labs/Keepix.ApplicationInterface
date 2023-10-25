@@ -2,13 +2,13 @@
 
 import styles from "./styles.module.scss";
 import { useEffect, useState } from "react";
-import Icon from "../Icon/Icon";
 import Link from "next/link";
 import Loader from "../Loader/Loader";
 import { useParams } from "next/navigation";
 import { getErrorMsg, safeFetch } from "@/lib/utils";
 import { useAPIContext } from "@/context/api/APIProvider";
 import BannerAlert from "../BannerAlert/BannerAlert";
+import { KEEPIX_API_URL } from "@/constants";
 
 type Data = {
   id: string;
@@ -17,7 +17,7 @@ type Data = {
   installed: boolean;
 }[];
 
-const fetchUrl = `${process.env.NEXT_PUBLIC_API_URL}/plugin/list`;
+const fetchUrl = `${KEEPIX_API_URL}/plugin/list`;
 
 export default function SidebarApps() {
   const params = useParams();
@@ -52,12 +52,12 @@ export default function SidebarApps() {
   return (
     <div className={styles.main}>
       <div className={styles.title}>Apps</div>
-
+    
       {isDataLoading && <Loader />}
       {error && <BannerAlert status="danger">{error}</BannerAlert>}
 
       {!isDataLoading && !data.length && (
-        <div className={styles.empty}>No app installed yet</div>
+       <BannerAlert status="info">No app installed yet.</BannerAlert>
       )}
       {data.length !== 0 && (
         <ul className={styles.list}>
@@ -69,7 +69,7 @@ export default function SidebarApps() {
             >
               <Link href={`/apps/${app.id}`} className={styles.itemLink}>
                 <div className={styles.itemIcon}>
-                  <Icon name="web_asset" />
+                  {/* <Icon name="web_asset" /> */}
                 </div>
                 <div className={styles.itemContent}>
                   <span className={styles.itemTitle}>{app.title}</span>

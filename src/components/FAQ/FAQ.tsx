@@ -26,16 +26,18 @@ const questions: Question[] = [
 
 export default function FAQ() {
   return (
-    <div className={styles.main}>
-      <div className={styles.title}>FAQ</div>
-      <div className={styles.questions}>
+    <div className="card card-default">
+      <h2 className="h2">FAQ</h2>
+      <dl className={styles.questions}>
         {questions.map((question) => (
-          <div className={styles.question} key={question.title}>
-            <div className={styles.questionTitle}>{question.title}</div>
+          <details className={styles.question} key={question.title}>
+            <summary className={styles.questionTitle}>
+              <span>{question.title}</span>
+            </summary>
             <div className={styles.questionDesc}>{question.desc}</div>
-          </div>
+          </details>
         ))}
-      </div>
+      </dl>
     </div>
   );
 }

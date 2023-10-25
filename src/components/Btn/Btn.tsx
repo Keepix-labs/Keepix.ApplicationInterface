@@ -2,30 +2,43 @@
 
 import Link from "next/link";
 import styles from "./styles.module.scss";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
+import { Icon } from '@iconify-icon/react';
 
-type Props = {
+type Status = "info" | "success" | "warning" | "danger"
+
+type PropsBtn = {
   href?: string;
-  children: ReactNode;
+  icon?: string;
+  status?: Status;
   onClick?: () => void;
-};
+  children: ReactNode;
+}
 
-export default function Icon({ href, children, onClick }: Props) {
+export default function Btn({ href, icon, children, status, onClick }: PropsBtn) {
+
+  const Content = (
+    <>
+      <span>{children}</span>
+      {icon && <Icon icon={icon} />}
+    </>
+  )
+
   if (onClick) {
     return (
-      <button onClick={onClick} className={styles.main}>
-        {children}
+      <button onClick={onClick} className={styles.btn} data-status={status}>
+        {Content}
       </button>
-    );
+    )
   }
 
   if (!href) {
-    return;
+    return
   }
 
   return (
-    <Link href={href} className={styles.main}>
-      {children}
+    <Link href={href} className={styles.btn} data-status={status}>
+      {Content}
     </Link>
-  );
+  )
 }

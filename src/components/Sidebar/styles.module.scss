@@ -1,49 +1,133 @@
-.main {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+@import '../../scss/mixins/styles';
+
+.sidebar {
+  --padding: var(--marge-primary);
+  --gap: calc(var(--padding) / 1.5);
   width: var(--sidebar-width);
-  background: url("/img/bg-hero.png") center/cover;
-  border-right: 2px solid var(--c-black);
-  padding: var(--padding-main);
-}
-
-.logo {
-  display: block;
-  width: 120px;
-  height: 30px;
-  background-color: white;
-  color: var(--c-black);
-}
-
-.apps {
-  margin-top: 16px;
-}
-
-.list {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  padding: var(--padding);
+
+  &Content {
+    overflow-y: scroll;
+    flex: 1;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    padding: var(--padding) 0;
+  
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &Logo {
+    @include style-primary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.4em 1.8em;
+
+    & > * {
+      width: 100%;
+    }
+
+    span {
+      position: absolute;
+      left: 40%;
+      top: 65%;
+      color: var(--txt-secondary);
+      font-size: 9px;
+      letter-spacing: 2px;
+    }
+  }
 }
-.link {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease-out;
 
-  &:hover,
-  [data-active="true"] > & {
-    border-radius: 4px;
-    background-color: rgba(255, 255, 255, 0.1);
-  }
+.nav {
+  @include style-primary;
+  --gutter: calc(var(--padding) / 2);
+  padding: var(--gutter);
+  font-size: calc(13px + 1 * (100vw - 320px) / 1080);
 
-  .icon {
-    font-size: 0;
-  }
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
 
-  path {
-    fill: var(--c-white);
+    [data-active=true] {
+      a {
+        background-color: var(--bg-secondary);
+      }
+    }
+
+    a {
+      padding: 1em;
+      border-radius: .85em;
+      display: flex;
+      align-items: center;
+      gap: 1.25em;
+      transition: var(--transition-link);
+
+      &:hover {
+        background-color: var(--bg-secondary);
+      }
+
+      iconify-icon {
+        transform: scale(1.4);
+        color: var(--txt-secondary);
+      }
+    }
   }
 }
+
+// .main {
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-between;
+//   width: var(--sidebar-width);
+//   background: url("/img/bg-hero.png") center/cover;
+//   border-right: 2px solid var(--c-black);
+//   padding: var(--padding-main);
+// }
+
+// .logo {
+//   display: block;
+//   width: 120px;
+//   height: 30px;
+//   background-color: white;
+//   color: var(--c-black);
+// }
+
+// .apps {
+//   margin-top: 16px;
+// }
+
+// .list {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 8px;
+// }
+// .link {
+//   display: flex;
+//   align-items: center;
+//   gap: 16px;
+//   padding: 8px;
+//   cursor: pointer;
+//   transition: background-color 0.3s ease-out;
+
+//   &:hover,
+//   [data-active="true"] > & {
+//     border-radius: 4px;
+//     background-color: rgba(255, 255, 255, 0.1);
+//   }
+
+//   .icon {
+//     font-size: 0;
+//   }
+
+//   path {
+//     fill: var(--c-white);
+//   }
+// }

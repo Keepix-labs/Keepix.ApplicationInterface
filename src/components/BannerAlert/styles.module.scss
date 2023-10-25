@@ -1,20 +1,19 @@
 .main {
-  padding: 16px;
-  background-color: var(--c-white);
-  color: var(--c-black);
-  border-radius: 8px;
-  margin: 8px 0;
+  background-color: rgba(var(--color, var(--bg-primary-rgb)) / var(--opacity-primary));
+  text-align: center;
+  padding: 1.15em;
+  border-radius: .85em;
+  gap: .65em;
+  display: flex;
+  align-items: center;
+  color: rgb(var(--color));
 
-  &[data-status="info"] {
-    background-color: blue;
+  iconify-icon {
+    transform: scale(1.2);
+    opacity: .5;
   }
-  &[data-status="success"] {
-    background-color: green;
-  }
-  &[data-status="warning"] {
-    background-color: orange;
-  }
-  &[data-status="danger"] {
-    background-color: red;
+
+  span {
+    font-size: .9em;
   }
 }

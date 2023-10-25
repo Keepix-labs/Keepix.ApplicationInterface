@@ -1,4 +1,4 @@
-import "../../scss/normalize.scss";
+import "../../scss/reset.scss";
 import "../../scss/variables.scss";
 import "../../scss/globals.scss";
 import type { Metadata } from "next";
@@ -6,6 +6,9 @@ import localFont from "next/font/local";
 import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import APIProvider from "@/context/api/APIProvider";
+import Sprites from '@/components/Sprites/Sprites';
+import Sidebar from "@/components/Sidebar/Sidebar";
+import CPU from '@/components/CPU/CPU';
 
 type Props = {
   children: React.ReactNode;
@@ -14,9 +17,11 @@ type Props = {
 
 const satoshi = localFont({
   src: "../../fonts/satoshi/Satoshi-Variable.woff2",
+  variable: "--font-family-main"
 });
 const clashdisplay = localFont({
   src: "../../fonts/clashdisplay/ClashDisplay-Variable.woff2",
+  variable: "--font-family-heading"
 });
 
 const metadata: Metadata = {
@@ -44,12 +49,17 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <body className={satoshi.className}>
+      <body className={satoshi.className + ' ' + clashdisplay.variable}>
         <APIProvider>
-          <NextIntlClientProvider locale={locale} messages={messages}>
-            {children}
-          </NextIntlClientProvider>
+          <Sidebar />
+          <main className="main">
+            <CPU />
+            <NextIntlClientProvider locale={locale} messages={messages}>
+              {children}
+            </NextIntlClientProvider>
+          </main>
         </APIProvider>
+        <Sprites />
       </body>
     </html>
   );

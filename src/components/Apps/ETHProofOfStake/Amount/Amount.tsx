@@ -10,6 +10,7 @@ import FAQ from "@/components/FAQ/FAQ";
 import { getErrorMsg, safeFetch } from "@/lib/utils";
 import BannerAlert from "@/components/BannerAlert/BannerAlert";
 import { useAPIContext } from "@/context/api/APIProvider";
+import { KEEPIX_API_URL } from '@/constants';
 
 type Data = {
   title: string;
@@ -34,8 +35,8 @@ export default function AppETHProofOfStakeAmount() {
     useState<boolean>(false);
 
   const amount = searchParams.get("amount") || "0";
-  const fetchUrl = `${process.env.NEXT_PUBLIC_API_URL}/plugin/${params["app-slug"]}/page/3?amount=${amount}`;
-  const fetchWalletSecretUrl = `${process.env.NEXT_PUBLIC_API_URL}/plugin/${params["app-slug"]}/wallet-secret`;
+  const fetchUrl = `${KEEPIX_API_URL}/plugin/${params["app-slug"]}/page/3?amount=${amount}`;
+  const fetchWalletSecretUrl = `${KEEPIX_API_URL}/plugin/${params["app-slug"]}/wallet-secret`;
 
   const fetchData = async () => {
     let response: Response;
@@ -89,28 +90,36 @@ export default function AppETHProofOfStakeAmount() {
     fetchData();
   }, []);
 
-  return (
-    <AppsBase
-      title={"ETHProofOfStake Setup"}
-      footer={
-        secretKeyDownloaded && (
-          <Btn href={`/apps/${params["app-slug"]}/transfer`}>Continue</Btn>
-        )
-      }
-    >
+  return (    
+    <AppsBase title="ETHProofOfStake" subTitle="2/2 • Setup your app" icon="cryptocurrency:eth" color="64 173 230">
       {isDataLoading && <Loader />}
       {error && <BannerAlert status="danger">{error}</BannerAlert>}
 
       {data && (
-        <div className={styles.main}>
-          <div className={styles.title}>{data.title}</div>
-          <div className={styles.cost}>
-            Cost : {data.amount} {data.currency}
+        <>
+          <div className="card card-default">
+            <h2 className="h2">{data.title}</h2>
+            <div className="table">
+              <table>
+                <tr>
+                  <td>Cost</td>
+                  <td><strong>{data.amount} {data.currency}</strong></td>
+                </tr>
+                <tr>
+                  <td>Address</td>
+                  <td><strong>{data.address}</strong></td>
+                </tr>
+              </table>
+            </div>
+            <div className="btn-group">
+              <Btn onClick={fetchWalletSecret} icon="ph:key">Get Wallet Secret</Btn>
+              {secretKeyDownloaded && (
+                <Btn href={`/apps/${params["app-slug"]}/transfer`} icon="ph:arrow-right" status="success">Continue</Btn>
+              )}
+            </div>
           </div>
-          <div className={styles.address}>Address : {data.address}</div>
-          <Btn onClick={fetchWalletSecret}>Get Wallet Secret</Btn>
           <FAQ />
-        </div>
+        </>
       )}
     </AppsBase>
   );

@@ -8,6 +8,7 @@ import { getErrorMsg, safeFetch } from "@/lib/utils";
 import BannerAlert from "@/components/BannerAlert/BannerAlert";
 import styles from "./styles.module.scss";
 import { useAPIContext } from "@/context/api/APIProvider";
+import {KEEPIX_API_URL} from "../../../../constants"
 
 type Data = {
   title: string;
@@ -56,7 +57,7 @@ export default function AppETHProofOfStakeDashboard() {
   const [isDataLoading, setDataLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchUrl = `${process.env.NEXT_PUBLIC_API_URL}/plugin/${params["app-slug"]}/page/0`;
+  const fetchUrl = `${KEEPIX_API_URL}/plugin/${params["app-slug"]}/page/0`;
 
   const fetchData = async () => {
     let response: Response;
@@ -85,7 +86,7 @@ export default function AppETHProofOfStakeDashboard() {
   }, []);
 
   return (
-    <AppsBase title={"Dashboard"}>
+    <AppsBase title="ETHProofOfStake" subTitle="Dashboard" icon="cryptocurrency:eth" color="64 173 230">
       {isDataLoading && <Loader />}
       {error && <BannerAlert status="danger">{error}</BannerAlert>}
 
