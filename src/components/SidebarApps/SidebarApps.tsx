@@ -17,7 +17,7 @@ type Data = {
   installed: boolean;
 }[];
 
-const fetchUrl = `${KEEPIX_API_URL}/plugin/list`;
+const fetchUrl = `${KEEPIX_API_URL}/plugins/list`;
 
 export default function SidebarApps() {
   const params = useParams();
